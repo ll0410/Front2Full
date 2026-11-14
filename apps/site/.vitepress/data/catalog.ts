@@ -75,6 +75,54 @@ const http11: Topic = {
   ]
 }
 
+const designPatterns: Topic = {
+  slug: 'design-patterns',
+  column: 'computer-programming',
+  status: 'published',
+  title: '经典设计模式浅析',
+  description: '用白话把 GoF 23 种设计模式讲清楚。',
+  parts: [
+    {
+      title: '第 1 部分 · 创建型 · 对象从哪来',
+      articles: [
+        { title: '单例模式 · Singleton（创建型）', slug: 'singleton' },
+        { title: '工厂方法 · Factory Method（创建型）', slug: 'factory-method' },
+        { title: '抽象工厂 · Abstract Factory（创建型）', slug: 'abstract-factory' },
+        { title: '建造者 · Builder（创建型）', slug: 'builder' },
+        { title: '原型 · Prototype（创建型）', slug: 'prototype' }
+      ]
+    },
+    {
+      title: '第 2 部分 · 结构型 · 对象怎么拼',
+      articles: [
+        { title: '适配器 · Adapter（结构型）', slug: 'adapter' },
+        { title: '装饰器 · Decorator（结构型）', slug: 'decorator' },
+        { title: '代理 · Proxy（结构型）', slug: 'proxy' },
+        { title: '外观 · Facade（结构型）', slug: 'facade' },
+        { title: '桥接 · Bridge（结构型）', slug: 'bridge' },
+        { title: '组合 · Composite（结构型）', slug: 'composite' },
+        { title: '享元 · Flyweight（结构型）', slug: 'flyweight' }
+      ]
+    },
+    {
+      title: '第 3 部分 · 行为型 · 对象怎么处',
+      articles: [
+        { title: '策略 · Strategy（行为型）', slug: 'strategy' },
+        { title: '观察者 · Observer（行为型）', slug: 'observer' },
+        { title: '命令 · Command（行为型）', slug: 'command' },
+        { title: '模板方法 · Template Method（行为型）', slug: 'template-method' },
+        { title: '迭代器 · Iterator（行为型）', slug: 'iterator' },
+        { title: '状态 · State（行为型）', slug: 'state' },
+        { title: '责任链 · Chain of Responsibility（行为型）', slug: 'chain-of-responsibility' },
+        { title: '中介者 · Mediator（行为型）', slug: 'mediator' },
+        { title: '备忘录 · Memento（行为型）', slug: 'memento' },
+        { title: '访问者 · Visitor（行为型）', slug: 'visitor' },
+        { title: '解释器 · Interpreter（行为型）', slug: 'interpreter' }
+      ]
+    }
+  ]
+}
+
 export const columns: Column[] = [
   {
     slug: 'agent',
@@ -288,7 +336,64 @@ export const columns: Column[] = [
         column: 'math',
         status: 'planned',
         title: '数值计算的艺术',
-        description: '从误差讲起，一路到求根、插值、积分与最优化。'
+        description:
+          '计算机只有有限精度，把纸上的数学公式照搬进去，常常算出垃圾。这个专栏从「误差」这个主角讲起，一路到求根、线性方程、插值、积分、微分方程、FFT、蒙特卡洛与最优化——代码优先，用 NumPy 手写核心算法，把「怎么算得又快又对」这门手艺讲透。',
+        parts: [
+          {
+            title: '有限精度的世界 · 地基',
+            articles: [
+              { title: '浮点数 · 0.1 + 0.2 为什么不等于 0.3', slug: 'floating-point' },
+              { title: '机器精度 · 误差有多大，以及怎么压住它', slug: 'machine-epsilon' },
+              { title: '灾难性抵消 · 两个相近的数相减', slug: 'cancellation' },
+              { title: '条件数与稳定性 · 是问题病态，还是算法不稳', slug: 'conditioning' }
+            ]
+          },
+          {
+            title: '求根 · 解 f(x)=0',
+            articles: [
+              { title: '二分法 · 最笨，但绝不失手', slug: 'bisection' },
+              { title: '牛顿法 · 切线的力量，与它翻车的时候', slug: 'newton' },
+              { title: '不动点与割线法 · 收敛阶怎么量', slug: 'iteration-order' }
+            ]
+          },
+          {
+            title: '线性代数 · 解 Ax=b',
+            articles: [
+              { title: '高斯消元与 LU 分解 · 解方程组的主力', slug: 'gaussian-lu' },
+              { title: '选主元与病态矩阵 · 方程为什么会算崩', slug: 'pivoting' },
+              { title: '迭代法 · Jacobi、Gauss-Seidel 与共轭梯度', slug: 'iterative-linear' },
+              { title: '特征值 · 幂迭代与 QR 算法', slug: 'eigenvalues' }
+            ]
+          },
+          {
+            title: '逼近 · 插值与拟合',
+            articles: [
+              { title: '多项式插值与 Runge 现象 · 高次不是越准', slug: 'interpolation' },
+              { title: '样条与最小二乘 · 分段的智慧与超定拟合', slug: 'splines-lsq' }
+            ]
+          },
+          {
+            title: '微积分的数值版',
+            articles: [
+              { title: '数值微分 · 有限差分，以及它为什么不稳', slug: 'differentiation' },
+              { title: '数值积分 · 梯形、Simpson 与自适应', slug: 'integration' },
+              { title: '常微分方程 · 从 Euler 到 RK4', slug: 'ode-euler-rk' },
+              { title: '刚性与隐式方法 · 显式为什么会爆炸', slug: 'stiffness' }
+            ]
+          },
+          {
+            title: '更多利器 · 变换、随机与最优化',
+            articles: [
+              { title: '快速傅里叶变换 · 从 O(n²) 到 O(n log n)', slug: 'fft' },
+              { title: '蒙特卡洛 · 用随机性做计算', slug: 'monte-carlo' },
+              { title: '最优化 · 梯度下降与找到最小值', slug: 'optimization' }
+            ]
+          },
+          {
+            title: '收尾',
+            articles: [{ title: '收尾 · 一张图串起整条主线', slug: 'recap' }]
+          }
+        ]
       }
     ]
   },
@@ -297,6 +402,7 @@ export const columns: Column[] = [
     title: '计算机编程',
     tagline: '协议、运行时、编译与网络，讲清楚计算机到底怎么运转。',
     topics: [
+      designPatterns,
       http11,
       {
         slug: 'http2-3',
