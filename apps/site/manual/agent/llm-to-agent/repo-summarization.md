@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/repo-summarization"
 
 > 一个中等仓库有几百万 token，窗口只有几十万——“总结仓库”本质是采样与预算分配问题，不是“读完再总结”。本篇把这条流水线的六个阶段逐个拆开：git 边界裁剪、确定性骨架采集、tree-sitter 符号 map、重要性排序、分治总结与归并、验证与失效管理，并给出七个常见失败模式。
 
-## 21 · 实战：LLM 是怎么总结一个代码仓库的
-
 正文二十篇已经收官。这一篇是**实战番外**：不再引入新部件，而是把前面焊上的零件——[工具](/manual/agent/llm-to-agent/tool-abstraction)、[并发](/manual/agent/llm-to-agent/streaming-tool-execution)、[子 Agent](/manual/agent/llm-to-agent/subagents)、[缓存](/manual/agent/llm-to-agent/prompt-caching)、[压缩](/manual/agent/llm-to-agent/auto-compaction)——组装起来，解决一个具体而普遍的问题：
 
 > **让 Agent 读懂一个它从没见过的代码仓库。**

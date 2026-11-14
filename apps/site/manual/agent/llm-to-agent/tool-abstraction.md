@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/tool-abstraction"
 
 > 前三篇里的 executeTool(name, input) 是个玩具。真实工具要自带参数校验、动态描述、权限检查、并发/只读/危险性标记、以及“给模型看”和“给人看”两套结果渲染。本篇解剖一个工业级 Tool 接口，并讲透两个决定性设计：元数据驱动编排，与安全默认(fail-closed)。
 
-## 04 · 工具系统的抽象设计：一个工业级工具的解剖
-
 [上一篇](/manual/agent/llm-to-agent/agent-loop)的循环里，反复出现一个含糊的 `executeTool(name, input)`。它能演示原理，但真要撑起一个 Coding Agent，一个工具远不止“一个执行函数”。这一篇，我们把 `Tool` 彻底拆开。
 
 ## 一、背景：玩具 `executeTool` 撑不起真实系统

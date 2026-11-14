@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/cost-tracking"
 
 > 每次调用都在花钱，而且四种 token(输入/输出/缓存写/缓存读)价格天差地别。讲清如何用分价目表把 usage 换算成美元、为什么必须分开统计这四类、子 Agent 与压缩调用也要计入，以及预算硬闸怎么接回主循环。
 
-## 16 · 成本与用量追踪：把 token 换算成钱
-
 [上一篇](/manual/agent/llm-to-agent/error-recovery)让 Agent 扛住了故障，但每一次调用、每一次重试、每一次压缩，都在**烧钱**。一个自主循环几十轮、还会派生[子 Agent](/manual/agent/llm-to-agent/subagents) 的系统，成本能悄悄失控。这一篇，我们把 token 换算成真金白银，并实时盯住。
 
 ## 一、背景：四种 token，四种价格

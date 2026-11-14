@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/raw-llm-api"
 
 > 在搭 Agent 之前，先把地基看清：一次 LLM API 调用的请求与响应长什么样、stop_reason 和 usage 意味着什么，以及三个决定性的“它不给你”——无状态、无记忆、不能行动。这三个“没有”，正是后面每一篇要填的坑。
 
-## 01 · 一次 LLM API 调用，到底给了你什么
-
 要理解 Agent 在 LLM 之上加了什么，得先精确地知道 LLM 本身给了什么。这一篇不聊 Agent，只把“裸 API”这块地基看到底——**你会发现它朴素得惊人**。
 
 ## 一、最朴素的一次调用

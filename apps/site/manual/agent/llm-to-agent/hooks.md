@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/hooks"
 
 > 用户想在工具执行前后、回合结束时插入自己的逻辑——自动格式化、提交前检查、强制“测试不过不许停”。讲清生命周期钩子的设计：PreToolUse 拦截/改写、PostToolUse 反应、以及最有意思的 Stop 钩子如何“拽住”想收工的 Agent。
 
-## 09 · Hooks：给 Agent 开一组可编程的插槽
-
 [权限](/manual/agent/llm-to-agent/permissions)是内置的安全策略，但用户总有自己的、五花八门的诉求：“每次改完文件自动跑一遍格式化”“提交前必须过 lint”“测试没绿之前不许它说完成”。这些没法全塞进 Agent 内核。这一篇，我们给它开一组**可编程的插槽**。
 
 ## 一、背景：内核装不下所有人的规矩

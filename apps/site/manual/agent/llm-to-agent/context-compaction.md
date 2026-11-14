@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/context-compaction"
 
 > 自动压缩是钝器——它摘要掉一整段、还击穿缓存。有时你只想精准处理“那个占了两万 token 的巨型工具结果”。讲清三把手术刀：工具结果预算(超限外置)、按 tool_use_id 定点删除的 microcompact、以及内容外置引用，以及它们如何在减负的同时保住缓存。
 
-## 14 · 精细化上下文管理：外科手术，而非大刀阔斧
-
 [上一篇的自动压缩](/manual/agent/llm-to-agent/auto-compaction)很有效，但它是**钝器**：一刀把边界前的所有历史摘要成一段，损失了全部细节，还[击穿了缓存](/manual/agent/llm-to-agent/prompt-caching)。很多时候，上下文膨胀其实只源于**几个具体的“胖子”**——你想要的是精准切除它们，而不是把整段历史推平。这一篇，讲三把外科手术刀。
 
 ## 一、背景：膨胀往往是“局部”的

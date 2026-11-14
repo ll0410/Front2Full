@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/streaming-tool-execution"
 
 > 工具块一流完就立刻派发，让工具执行和模型继续生成在时间上重叠；同一批工具里，并发安全的并行跑、其余保序串行。讲清 isConcurrencySafe 如何驱动编排，以及“读可以乱序、写必须有序”这条铁律。
 
-## 06 · 边流边执行 + 并发编排：把等待时间榨干
-
 [上一篇](/manual/agent/llm-to-agent/streaming)结尾埋了个引子：工具块一 `content_block_stop`，参数就齐了，不必等整条消息结束就能派发。这一篇把这个优化，连同“一批工具怎么并行”一起做掉。目标只有一个：**把 Agent 花在等待上的时间榨干。**
 
 ## 一、背景：两处被浪费的时间

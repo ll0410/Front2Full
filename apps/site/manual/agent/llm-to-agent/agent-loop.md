@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/agent-loop"
 
 > 把“工具调用”从一次性问答变成自主推进，只差一个循环。本篇给出最小可用的 Agent Loop(约 30 行)，再逐层剖开一个生产级循环真正要处理的：终止条件、失控保护、流式产出、跨轮状态，以及它为什么必须是一个 async generator。
 
-## 03 · Agent Loop：所谓智能体，内核是一个 while 循环
-
 这是整个专栏最关键的一篇。[上一篇](/manual/agent/llm-to-agent/tool-use)我们手动走完了一轮工具调用。现在我们把“手动”变成“自动”——而这一步质变，就是“Agent”这个词的全部含义。
 
 ## 一、背景：一轮不够，远远不够

@@ -8,8 +8,6 @@ source: "https://daiw.org/manual/llm-to-agent/auto-compaction"
 
 > 缓存省钱但不缩小历史；当历史真的装不下，就得把老对话摘要掉。讲清压缩边界(保留近期、摘要远古)、摘要 prompt 为何是成败关键、proactive 与 reactive 两种触发，以及压缩与缓存那对绕不开的矛盾。
 
-## 13 · 自动压缩：把历史折叠成摘要
-
 [缓存](/manual/agent/llm-to-agent/prompt-caching)解决了“重复的别重算”，但它救不了另一半问题：当历史本身**膨胀到装不下**窗口时，缓存无能为力——你得真的**把历史变小**。这一篇，我们正面处理这头猛兽。
 
 ## 一、背景：缓存不缩小任何东西
