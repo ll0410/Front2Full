@@ -123,6 +123,88 @@ const designPatterns: Topic = {
   ]
 }
 
+const chromeExtension: Topic = {
+  slug: 'chrome-extension',
+  column: 'computer-programming',
+  status: 'published',
+  title: 'Chrome 插件开发指南',
+  description:
+    '基于 Manifest V3 的 Chrome 扩展开发中文指南——从 Hello World 到上架 Chrome Web Store。',
+  parts: [
+    {
+      title: '第 1 部分 · 入门',
+      articles: [
+        { title: '扩展是什么', slug: 'what-is-extension' },
+        { title: '开发环境准备', slug: 'environment-setup' },
+        { title: 'Hello World', slug: 'hello-world' }
+      ]
+    },
+    {
+      title: '第 2 部分 · 实战课程',
+      articles: [
+        { title: '第 1 课：Hello Popup', slug: 'lesson-01-hello-popup' },
+        { title: '第 2 课：Content Script', slug: 'lesson-02-content-script' },
+        { title: '第 3 课：Service Worker', slug: 'lesson-03-service-worker' },
+        { title: '第 4 课：消息传递', slug: 'lesson-04-message-passing' },
+        { title: '第 5 课：Storage API', slug: 'lesson-05-storage-api' },
+        { title: '第 6 课：Options Page', slug: 'lesson-06-options-page' },
+        { title: '第 7 课：Context Menus', slug: 'lesson-07-context-menus' },
+        { title: '第 8 课：Side Panel', slug: 'lesson-08-side-panel' },
+        { title: '第 9 课：Declarative Net Request', slug: 'lesson-09-declarative-net-request' },
+        { title: '第 10 课：Offscreen Document', slug: 'lesson-10-offscreen-document' }
+      ]
+    },
+    {
+      title: '第 3 部分 · Manifest V3',
+      articles: [
+        { title: 'manifest.json 概览', slug: 'manifest-overview' },
+        { title: 'Service Worker', slug: 'service-worker' },
+        { title: 'Content Scripts', slug: 'content-scripts' },
+        { title: 'Popup 与选项页', slug: 'popup-and-ui' }
+      ]
+    },
+    {
+      title: '第 4 部分 · 通信与存储',
+      articles: [
+        { title: '消息传递', slug: 'messaging' },
+        { title: '存储 API', slug: 'storage' },
+        { title: '网络与 CORS', slug: 'network-and-cors' }
+      ]
+    },
+    {
+      title: '第 5 部分 · 权限与安全',
+      articles: [
+        { title: '权限模型', slug: 'permissions' },
+        { title: '内容安全策略', slug: 'content-security' }
+      ]
+    },
+    {
+      title: '第 6 部分 · 进阶 API',
+      articles: [
+        { title: 'Side Panel', slug: 'side-panel' },
+        { title: 'Scripting API', slug: 'scripting-api' },
+        { title: 'declarativeNetRequest', slug: 'declarative-net-request' }
+      ]
+    },
+    {
+      title: '第 7 部分 · 工程化',
+      articles: [
+        { title: '调试', slug: 'debugging' },
+        { title: '测试策略', slug: 'testing' },
+        { title: '项目结构', slug: 'project-structure' },
+        { title: '上架 Chrome Web Store', slug: 'publish-chrome-web-store' }
+      ]
+    },
+    {
+      title: '第 8 部分 · 附录',
+      articles: [
+        { title: 'PWA 开发指南', slug: 'appendix-pwa' },
+        { title: '油猴脚本开发指南', slug: 'appendix-userscript' }
+      ]
+    }
+  ]
+}
+
 export const columns: Column[] = [
   {
     slug: 'agent',
@@ -403,6 +485,7 @@ export const columns: Column[] = [
     tagline: '协议、运行时、编译与网络，讲清楚计算机到底怎么运转。',
     topics: [
       designPatterns,
+      chromeExtension,
       http11,
       {
         slug: 'http2-3',
