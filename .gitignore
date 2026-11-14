@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+.turbo/
+*.log
+.env
+.env.*
+apps/site/.vitepress/cache/
+apps/site/.vitepress/dist/
+.screenshots/
+.trae/

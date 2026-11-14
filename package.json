@@ -1,0 +1,17 @@
+{
+  "name": "front2full",
+  "private": true,
+  "packageManager": "pnpm@10.34.9",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "preview": "turbo run preview",
+    "clean": "rm -rf apps/site/.vitepress/cache apps/site/.vitepress/dist .turbo"
+  },
+  "devDependencies": {
+    "turbo": "2.11.11"
+  }
+}

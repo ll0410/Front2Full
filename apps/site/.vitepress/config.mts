@@ -1,0 +1,66 @@
+import { defineConfig } from 'vitepress'
+import { columns } from './data/catalog'
+import { buildSidebar } from './utils/sidebar'
+
+// 部署到 GitHub Pages 项目页等子路径时，把 base 改成 '/<repo>/'。
+const base = '/'
+
+export default defineConfig({
+  lang: 'zh-CN',
+  title: 'Front2Full',
+  description: '从前端出发，沿技术栈走到全栈',
+  base,
+  cleanUrls: true,
+  // 新仓库暂无提交历史，git 时间戳不可用；原文更新日期在专题首页标注。
+  lastUpdated: false,
+  markdown: {
+    lineNumbers: true,
+    theme: {
+      light: 'github-light',
+      dark: 'github-dark'
+    }
+  },
+  head: [['meta', { name: 'theme-color', content: '#18794e' }]],
+  themeConfig: {
+    outline: {
+      level: [2, 3],
+      label: '本页目录'
+    },
+    // 各专栏平铺在顶部导航，不做下拉折叠。
+    nav: columns.map(column => ({
+      text: column.title,
+      link: `/manual/${column.slug}/`,
+      activeMatch: `/manual/${column.slug}/`
+    })),
+    sidebar: buildSidebar(columns),
+    search: {
+      provider: 'local',
+      options: {
+        translations: {
+          button: {
+            buttonText: '搜索',
+            buttonAriaLabel: '搜索文档'
+          },
+          modal: {
+            noResultsText: '没有找到结果',
+            resetButtonTitle: '清空',
+            footer: {
+              selectText: '选择',
+              navigateText: '切换',
+              closeText: '关闭'
+            }
+          }
+        }
+      }
+    },
+    docFooter: {
+      prev: '上一篇',
+      next: '下一篇'
+    },
+    lastUpdatedText: '更新于',
+    darkModeSwitchLabel: '主题',
+    sidebarMenuLabel: '目录',
+    returnToTopLabel: '回到顶部',
+    outlineTitle: '本页目录'
+  }
+})
