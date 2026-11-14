@@ -84,9 +84,72 @@ export const columns: Column[] = [
       {
         slug: 'llm-to-agent',
         column: 'agent',
-        status: 'planned',
+        status: 'published',
         title: '从 LLM 到 Coding Agent',
-        description: '逐层拆解一个生产级 Coding Agent 在裸 LLM API 之上做的每一件事。'
+        description: '逐层拆解一个生产级 Coding Agent 在裸 LLM API 之上做的每一件事。',
+        parts: [
+          {
+            title: '第 1 部分 · 起点 · 裸 LLM API',
+            articles: [
+              { title: '一次 LLM API 调用，到底给了你什么', slug: 'raw-llm-api' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 让模型能做事',
+            articles: [
+              { title: '工具调用：让模型的“意图”变成真实的“动作”', slug: 'tool-use' },
+              { title: 'Agent Loop：所谓智能体，内核是一个 while 循环', slug: 'agent-loop' },
+              { title: '工具系统的抽象设计：一个工业级工具的解剖', slug: 'tool-abstraction' }
+            ]
+          },
+          {
+            title: '第 3 部分 · 流式与并发',
+            articles: [
+              { title: '流式处理：边生成边消费，以及工具参数的“逐字到达”', slug: 'streaming' },
+              { title: '边流边执行 + 并发编排：把等待时间榨干', slug: 'streaming-tool-execution' }
+            ]
+          },
+          {
+            title: '第 4 部分 · 安全与控制',
+            articles: [
+              { title: '权限系统：在“放手让它干”和“别让它闯祸”之间划线', slug: 'permissions' },
+              { title: '中断与转向：在流式、并发、欠着一堆 tool_result 时干净地叫停', slug: 'interrupt' },
+              { title: 'Hooks：给 Agent 开一组可编程的插槽', slug: 'hooks' }
+            ]
+          },
+          {
+            title: '第 5 部分 · 上下文工程',
+            articles: [
+              { title: 'Token 预算：与有限上下文窗口的持久战', slug: 'token-budget' },
+              { title: '系统提示与上下文注入：每轮喂给模型的那坨东西，到底是怎么拼的', slug: 'context-injection' },
+              { title: 'Prompt 缓存：省钱省延迟最立竿见影的一招', slug: 'prompt-caching' },
+              { title: '自动压缩：上下文快满了，把历史折叠成摘要', slug: 'auto-compaction' },
+              { title: '精细化上下文管理：外科手术，而非大刀阔斧', slug: 'context-compaction' }
+            ]
+          },
+          {
+            title: '第 6 部分 · 健壮性',
+            articles: [
+              { title: '错误恢复与模型回退：把“出错”当成常态', slug: 'error-recovery' },
+              { title: '成本与用量追踪：把 token 换算成钱，并实时盯住', slug: 'cost-tracking' },
+              { title: '扩展思考的处理：签名、模型绑定，和那些能调一整天的坑', slug: 'thinking' }
+            ]
+          },
+          {
+            title: '第 7 部分 · 扩展与规模',
+            articles: [
+              { title: '子 Agent：用上下文隔离，把细节挡在主线程之外', slug: 'subagents' },
+              { title: 'MCP 与工具懒加载：接入开放生态，并解决“几百个工具”的规模问题', slug: 'mcp' },
+              { title: '会话历史与持久化：让 Agent 活过进程的生命周期', slug: 'session-history' }
+            ]
+          },
+          {
+            title: '第 8 部分 · 实战 · 综合运用',
+            articles: [
+              { title: '实战：LLM 是怎么总结一个代码仓库的', slug: 'repo-summarization' }
+            ]
+          }
+        ]
       },
       {
         slug: 'claude-code',
