@@ -878,6 +878,68 @@ export const columns: Column[] = [
             ]
           }
         ]
+      },
+      {
+        slug: 'huggingface',
+        column: 'llm',
+        status: 'published',
+        title: 'HuggingFace 模型下载与部署',
+        description:
+          '从 Hub 上把模型拉下来、在自己的机器上跑起来，再用它的数据集与算力训出自己的模型——一份偏实操的 HuggingFace 生态指南。',
+        parts: [
+          {
+            title: '第 1 部分 · 认识 Hub',
+            articles: [
+              { title: 'HuggingFace 到底是什么', slug: 'what-is-huggingface' },
+              { title: '一个模型仓库里有什么', slug: 'repo-anatomy' },
+              { title: '权重格式', slug: 'weight-formats' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 下载',
+            articles: [
+              { title: '命令行与登录', slug: 'cli-and-auth' },
+              { title: '下载', slug: 'downloading' },
+              { title: '国内访问', slug: 'china-access' }
+            ]
+          },
+          {
+            title: '第 3 部分 · 单机部署',
+            articles: [
+              { title: '按显存选模型', slug: 'choose-by-vram' },
+              { title: '用 transformers 跑起来', slug: 'transformers-serving' },
+              { title: 'GGUF 路线：llama.cpp 与 Ollama', slug: 'gguf-llamacpp-ollama' },
+              { title: 'vLLM 服务化', slug: 'vllm-serving' },
+              { title: '经典模型清单', slug: 'classic-models' }
+            ]
+          },
+          {
+            title: '第 4 部分 · 数据集',
+            articles: [
+              { title: 'datasets 库基础', slug: 'datasets-basics' },
+              { title: '做自己的数据集', slug: 'build-your-dataset' }
+            ]
+          },
+          {
+            title: '第 5 部分 · 自己训模型',
+            articles: [
+              { title: 'LoRA 与 QLoRA 微调', slug: 'finetune-lora' },
+              { title: '训练实操', slug: 'training-practice' },
+              { title: '推回 Hub', slug: 'push-to-hub' }
+            ]
+          },
+          {
+            title: '第 6 部分 · 算力与收费',
+            articles: [
+              { title: '算力选项', slug: 'compute-options' },
+              { title: '收费版怎么用才值', slug: 'paid-tiers' }
+            ]
+          },
+          {
+            title: '收尾',
+            articles: [{ title: '收尾复盘', slug: 'recap' }]
+          }
+        ]
       }
     ]
   },
