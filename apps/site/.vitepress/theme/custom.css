@@ -31,6 +31,15 @@
   --f2f-card-radius: 12px;
   --f2f-card-border: var(--vp-c-border);
   --f2f-card-bg: var(--vp-c-bg-soft);
+  /* 浅色模式下 hover 反转为深色卡片（沿用暗色主题的深色底与浅色文字） */
+  --f2f-card-bg-hover: #0d121b;
+  --f2f-card-hover-title: #d9e6eb;
+  --f2f-card-hover-desc: #98a6b3;
+  --f2f-card-hover-meta: #7f8f9c;
+
+  /* 专题卡片 hover 过渡：统一使用缓入缓出的曲线，避免颜色切换时的跳变闪烁 */
+  --f2f-hover-duration: 0.36s;
+  --f2f-hover-ease: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dark {
@@ -46,6 +55,12 @@
   --vp-c-bg-elv: #161f32;
   --vp-c-text-1: #d9e6eb;
   --vp-c-divider: #2e2e32;
+
+  /* 暗色模式下 hover 反转为主题黄色卡片，文字改用深色 */
+  --f2f-card-bg-hover: #ffd859;
+  --f2f-card-hover-title: #0d121b;
+  --f2f-card-hover-desc: rgba(13, 18, 27, 0.78);
+  --f2f-card-hover-meta: rgba(13, 18, 27, 0.6);
 
   --vp-home-hero-name-background: linear-gradient(78deg, #f7d336 30%, #8ae99c);
 }
@@ -70,12 +85,12 @@
   text-decoration: none;
 }
 
-/* ---------- 首页专栏区（结构参考 daiw.org：分组标题栏 + 多列紧凑条目） ---------- */
+/* ---------- 首页专栏区（卡片网格参考 pinia.vuejs.org 首页 features） ---------- */
 
 .home-columns {
   display: flex;
   flex-direction: column;
-  gap: 56px;
+  gap: 48px;
   margin: 8px 0 0;
 }
 
@@ -84,9 +99,24 @@
   align-items: baseline;
   justify-content: space-between;
   gap: 16px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
   padding-bottom: 12px;
   border-bottom: 1px solid var(--vp-c-divider);
+  /* 默认隐藏专栏标题栏，hover 整个专栏时淡入 */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-4px);
+  transition:
+    opacity var(--f2f-hover-duration) var(--f2f-hover-ease),
+    transform var(--f2f-hover-duration) var(--f2f-hover-ease),
+    visibility var(--f2f-hover-duration) var(--f2f-hover-ease);
+}
+
+/* 悬停/聚焦优先，否则由滚动居中判定；始终只有一个专栏处于该状态 */
+.home-column--active .home-column__head {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
 }
 
 .vp-doc .home-column__title {
@@ -108,9 +138,8 @@
 .vp-doc ul.home-column__list {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  column-gap: 16px;
-  row-gap: 4px;
-  margin: 0 -12px;
+  gap: 16px;
+  margin: 0;
   padding: 0;
   list-style: none;
 }
@@ -125,85 +154,99 @@
 
 .home-topic {
   display: flex;
-  gap: 12px;
+  flex-direction: column;
   height: 100%;
-  padding: 12px;
-  border-radius: 12px;
-  transition: background-color 0.18s ease;
+  padding: 24px;
+  overflow: hidden;
+  border: 1px solid var(--f2f-card-bg);
+  border-radius: var(--f2f-card-radius);
+  background: var(--f2f-card-bg);
+  -webkit-tap-highlight-color: transparent;
+  transition:
+    background-color var(--f2f-hover-duration) var(--f2f-hover-ease),
+    border-color var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
 .vp-doc a.home-topic {
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
+  /* 覆盖 VitePress 正文链接自带的 transition，确保背景/边框与文字同步缓动 */
+  transition:
+    background-color var(--f2f-hover-duration) var(--f2f-hover-ease),
+    border-color var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
 .vp-doc a.home-topic:hover {
-  background: var(--vp-c-default-soft);
+  border-color: var(--f2f-card-bg-hover);
+  background-color: var(--f2f-card-bg-hover);
 }
 
-.home-topic__icon {
-  display: flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background: var(--vp-c-brand-soft);
-  color: var(--vp-c-brand-1);
+.vp-doc a.home-topic:hover .home-topic__title {
+  color: var(--f2f-card-hover-title);
 }
 
-.home-topic__icon svg {
-  width: 18px;
-  height: 18px;
+.vp-doc a.home-topic:hover .home-topic__desc {
+  color: var(--f2f-card-hover-desc);
+  transform: translateY(-6px);
 }
 
-.home-topic__body {
-  display: flex;
-  flex-direction: column;
-  min-width: 0;
+.vp-doc a.home-topic:hover .home-topic__meta {
+  color: var(--f2f-card-hover-meta);
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .home-topic__title {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 1.4;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
   color: var(--vp-c-text-1);
+  transition: color var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
 .home-topic__desc {
-  display: -webkit-box;
-  margin-top: 4px;
-  overflow: hidden;
-  font-size: 13px;
-  line-height: 1.6;
+  flex-grow: 1;
+  padding-top: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 24px;
   color: var(--vp-c-text-2);
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  transition:
+    color var(--f2f-hover-duration) var(--f2f-hover-ease),
+    transform var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
 .home-topic__meta {
-  margin-top: 4px;
+  padding-top: 8px;
   font-size: 12px;
+  line-height: 20px;
   color: var(--vp-c-text-3);
+  opacity: 0;
+  /* 默认藏在卡片底部之外，hover 时向上移入 */
+  transform: translateY(calc(100% + 24px));
+  transition:
+    color var(--f2f-hover-duration) var(--f2f-hover-ease),
+    opacity var(--f2f-hover-duration) var(--f2f-hover-ease),
+    transform var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
 .home-topic--planned {
+  border-style: dashed;
+  background: transparent;
   cursor: default;
-}
-
-.home-topic--planned .home-topic__icon {
-  background: var(--vp-c-default-soft);
-  color: var(--vp-c-text-3);
 }
 
 .home-topic--planned .home-topic__title {
   color: var(--vp-c-text-2);
+}
+
+.home-topic--planned .home-topic__desc {
+  color: var(--vp-c-text-3);
 }
 
 .home-topic__badge {
