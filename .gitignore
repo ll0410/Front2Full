@@ -5,6 +5,7 @@ node_modules/
 .env
 .env.*
 apps/site/.vitepress/cache/
+apps/site/.vitepress/.temp/
 apps/site/.vitepress/dist/
 .screenshots/
 .trae/
