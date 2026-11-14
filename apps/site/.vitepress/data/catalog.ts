@@ -247,6 +247,89 @@ const http2And3: Topic = {
   ]
 }
 
+const webSecurity: Topic = {
+  slug: 'web-security',
+  column: 'computer-programming',
+  status: 'published',
+  title: '网站安全一本通',
+  description:
+    '沿着一次 HTTP 请求的完整旅程，逐层拆解网站安全——域名与 DNS、CDN 与负载均衡、Nginx、前端、后端、依赖组件、架构与运维。',
+  parts: [
+    {
+      title: '第 0 部分 · 先建立框架',
+      articles: [
+        { title: '威胁建模：你到底在防谁', slug: 'threat-model' },
+        { title: '一次请求的旅程', slug: 'request-journey' }
+      ]
+    },
+    {
+      title: '第 1 部分 · 域名与 DNS',
+      articles: [
+        { title: '注册商与域名账号安全', slug: 'registrar-security' },
+        { title: 'DNS 加固：DNSSEC 与 CAA', slug: 'dns-hardening' },
+        { title: '子域名接管', slug: 'subdomain-takeover' },
+        { title: 'TLS 与证书管理', slug: 'tls-and-certs' }
+      ]
+    },
+    {
+      title: '第 2 部分 · 边缘：CDN 与负载均衡',
+      articles: [
+        { title: '源站暴露：CDN 最常见的失效方式', slug: 'origin-exposure' },
+        { title: 'DDoS 与限流', slug: 'ddos-and-ratelimit' },
+        { title: 'WAF：能挡什么，挡不了什么', slug: 'waf' }
+      ]
+    },
+    {
+      title: '第 3 部分 · Nginx',
+      articles: [
+        { title: 'Nginx 加固基线', slug: 'nginx-baseline' },
+        { title: 'Nginx 配置陷阱', slug: 'nginx-pitfalls' },
+        { title: 'HTTP 请求走私', slug: 'request-smuggling' }
+      ]
+    },
+    {
+      title: '第 4 部分 · 前端',
+      articles: [
+        { title: 'XSS：三种形态与真实防御', slug: 'xss' },
+        { title: 'CSP：从报告模式到严格模式', slug: 'csp' },
+        { title: 'CSRF 与 SameSite', slug: 'csrf' },
+        { title: '安全响应头', slug: 'security-headers' },
+        { title: '前端供应链', slug: 'frontend-supply-chain' }
+      ]
+    },
+    {
+      title: '第 5 部分 · 后端',
+      articles: [
+        { title: '注入：一个根因，多种形态', slug: 'injection' },
+        { title: '认证：密码、会话与多因素', slug: 'authn' },
+        { title: '授权：越权与 IDOR', slug: 'authz' },
+        { title: 'SSRF：让服务器替攻击者发请求', slug: 'ssrf' },
+        { title: '文件上传', slug: 'file-upload' },
+        { title: '密钥与凭据管理', slug: 'secrets' }
+      ]
+    },
+    {
+      title: '第 6 部分 · 组件与依赖',
+      articles: [
+        { title: '依赖审计', slug: 'dependency-audit' },
+        { title: '容器与镜像安全', slug: 'container-security' }
+      ]
+    },
+    {
+      title: '第 7 部分 · 架构与运维',
+      articles: [
+        { title: '纵深防御与最小权限', slug: 'defense-in-depth' },
+        { title: '日志、监控与检测', slug: 'logging-and-detection' },
+        { title: '应急响应', slug: 'incident-response' }
+      ]
+    },
+    {
+      title: '收尾',
+      articles: [{ title: '上线安全检查清单', slug: 'checklist' }]
+    }
+  ]
+}
+
 export const columns: Column[] = [
   {
     slug: 'agent',
@@ -530,6 +613,7 @@ export const columns: Column[] = [
       chromeExtension,
       http11,
       http2And3,
+      webSecurity,
       {
         slug: 'ssr',
         column: 'computer-programming',
