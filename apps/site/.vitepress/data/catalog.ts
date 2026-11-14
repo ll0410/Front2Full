@@ -91,9 +91,45 @@ export const columns: Column[] = [
       {
         slug: 'claude-code',
         column: 'agent',
-        status: 'planned',
-        title: 'Claude Code 手册',
-        description: '基于官方文档整理的 Claude Code CLI 使用参考。'
+        status: 'published',
+        title: 'Claude Code 中文手册',
+        description: '基于 Claude Code v2.1.318 官方文档整理的 Claude Code 中文手册。',
+        parts: [
+          {
+            title: '第 1 部分 · 入门',
+            articles: [
+              { title: '安装与升级', slug: 'installation' },
+              { title: '启动命令行选项', slug: 'cli-flags' },
+              { title: '环境变量', slug: 'environment-variables' },
+              { title: '配置文件', slug: 'configuration-files' },
+              { title: '上手使用', slug: 'scenarios' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 命令参考',
+            articles: [
+              { title: '会话与上下文管理', slug: 'commands-session' },
+              { title: '模型、效率与权限', slug: 'commands-model-permissions' },
+              { title: '并行与后台协作', slug: 'commands-collaboration' },
+              { title: '代码评审与 Git 工作流', slug: 'commands-review' },
+              { title: '自定义与扩展', slug: 'commands-customization' },
+              { title: '账户、诊断与其它命令', slug: 'commands-misc' }
+            ]
+          },
+          {
+            title: '第 3 部分 · 进阶',
+            articles: [
+              { title: 'Commands', slug: 'custom-commands' },
+              { title: 'Skills', slug: 'skills' },
+              { title: 'Agents', slug: 'agents' },
+              { title: 'Plugins', slug: 'plugins' }
+            ]
+          },
+          {
+            title: '第 4 部分 · 其它',
+            articles: [{ title: '版本 Changelog', slug: 'changelog' }]
+          }
+        ]
       },
       {
         slug: 'codex',
