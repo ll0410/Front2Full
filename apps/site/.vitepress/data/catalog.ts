@@ -205,6 +205,48 @@ const chromeExtension: Topic = {
   ]
 }
 
+const http2And3: Topic = {
+  slug: 'http2-3',
+  column: 'computer-programming',
+  status: 'published',
+  title: 'HTTP/2 与 HTTP/3 协议详解',
+  description:
+    '二进制分帧、HPACK/QPACK、多路复用与 QUIC——逐项拆解 HTTP/2 与 HTTP/3 相对 1.1 改了什么。',
+  parts: [
+    {
+      title: '第 1 部分 · HTTP/2',
+      articles: [
+        { title: 'HTTP/2 总览', slug: 'h2-overview' },
+        { title: '二进制分帧层', slug: 'h2-framing' },
+        { title: '流与多路复用', slug: 'h2-streams' },
+        { title: 'HPACK 头部压缩', slug: 'hpack' },
+        { title: '伪头字段', slug: 'h2-pseudo-headers' },
+        { title: '流量控制', slug: 'h2-flow-control' },
+        { title: 'SETTINGS 与优先级', slug: 'h2-settings-priority' },
+        { title: '连接管理与错误码', slug: 'h2-connection' },
+        { title: '服务端推送', slug: 'h2-server-push' }
+      ]
+    },
+    {
+      title: '第 2 部分 · HTTP/3 与 QUIC',
+      articles: [
+        { title: 'HTTP/3 总览', slug: 'h3-overview' },
+        { title: 'QUIC 传输层', slug: 'quic-transport' },
+        { title: 'HTTP/3 帧格式', slug: 'h3-framing' },
+        { title: 'QPACK 头部压缩', slug: 'qpack' },
+        { title: '连接与服务发现', slug: 'h3-connection' }
+      ]
+    },
+    {
+      title: '第 3 部分 · 对照与迁移',
+      articles: [
+        { title: '三版全面对照', slug: 'version-comparison' },
+        { title: '迁移注意事项', slug: 'migration-notes' }
+      ]
+    }
+  ]
+}
+
 export const columns: Column[] = [
   {
     slug: 'agent',
@@ -416,7 +458,7 @@ export const columns: Column[] = [
       {
         slug: 'numerical',
         column: 'math',
-        status: 'planned',
+        status: 'published',
         title: '数值计算的艺术',
         description:
           '计算机只有有限精度，把纸上的数学公式照搬进去，常常算出垃圾。这个专栏从「误差」这个主角讲起，一路到求根、线性方程、插值、积分、微分方程、FFT、蒙特卡洛与最优化——代码优先，用 NumPy 手写核心算法，把「怎么算得又快又对」这门手艺讲透。',
@@ -487,13 +529,7 @@ export const columns: Column[] = [
       designPatterns,
       chromeExtension,
       http11,
-      {
-        slug: 'http2-3',
-        column: 'computer-programming',
-        status: 'planned',
-        title: 'HTTP/2 与 HTTP/3',
-        description: '二进制分帧、HPACK/QPACK、多路复用与 QUIC。'
-      },
+      http2And3,
       {
         slug: 'ssr',
         column: 'computer-programming',
