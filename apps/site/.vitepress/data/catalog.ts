@@ -83,41 +83,41 @@ const designPatterns: Topic = {
   description: '用白话把 GoF 23 种设计模式讲清楚。',
   parts: [
     {
-      title: '第 1 部分 · 创建型 · 对象从哪来',
+      title: '第 1 部分 创建型 对象从哪来',
       articles: [
-        { title: '单例模式 · Singleton（创建型）', slug: 'singleton' },
-        { title: '工厂方法 · Factory Method（创建型）', slug: 'factory-method' },
-        { title: '抽象工厂 · Abstract Factory（创建型）', slug: 'abstract-factory' },
-        { title: '建造者 · Builder（创建型）', slug: 'builder' },
-        { title: '原型 · Prototype（创建型）', slug: 'prototype' }
+        { title: '单例模式（创建型）', slug: 'singleton' },
+        { title: '工厂方法（创建型）', slug: 'factory-method' },
+        { title: '抽象工厂（创建型）', slug: 'abstract-factory' },
+        { title: '建造者（创建型）', slug: 'builder' },
+        { title: '原型（创建型）', slug: 'prototype' }
       ]
     },
     {
-      title: '第 2 部分 · 结构型 · 对象怎么拼',
+      title: '第 2 部分 结构型 对象怎么拼',
       articles: [
-        { title: '适配器 · Adapter（结构型）', slug: 'adapter' },
-        { title: '装饰器 · Decorator（结构型）', slug: 'decorator' },
-        { title: '代理 · Proxy（结构型）', slug: 'proxy' },
-        { title: '外观 · Facade（结构型）', slug: 'facade' },
-        { title: '桥接 · Bridge（结构型）', slug: 'bridge' },
-        { title: '组合 · Composite（结构型）', slug: 'composite' },
-        { title: '享元 · Flyweight（结构型）', slug: 'flyweight' }
+        { title: '适配器（结构型）', slug: 'adapter' },
+        { title: '装饰器（结构型）', slug: 'decorator' },
+        { title: '代理（结构型）', slug: 'proxy' },
+        { title: '外观（结构型）', slug: 'facade' },
+        { title: '桥接（结构型）', slug: 'bridge' },
+        { title: '组合（结构型）', slug: 'composite' },
+        { title: '享元（结构型）', slug: 'flyweight' }
       ]
     },
     {
-      title: '第 3 部分 · 行为型 · 对象怎么处',
+      title: '第 3 部分 行为型 对象怎么处',
       articles: [
-        { title: '策略 · Strategy（行为型）', slug: 'strategy' },
-        { title: '观察者 · Observer（行为型）', slug: 'observer' },
-        { title: '命令 · Command（行为型）', slug: 'command' },
-        { title: '模板方法 · Template Method（行为型）', slug: 'template-method' },
-        { title: '迭代器 · Iterator（行为型）', slug: 'iterator' },
-        { title: '状态 · State（行为型）', slug: 'state' },
-        { title: '责任链 · Chain of Responsibility（行为型）', slug: 'chain-of-responsibility' },
-        { title: '中介者 · Mediator（行为型）', slug: 'mediator' },
-        { title: '备忘录 · Memento（行为型）', slug: 'memento' },
-        { title: '访问者 · Visitor（行为型）', slug: 'visitor' },
-        { title: '解释器 · Interpreter（行为型）', slug: 'interpreter' }
+        { title: '策略（行为型）', slug: 'strategy' },
+        { title: '观察者（行为型）', slug: 'observer' },
+        { title: '命令（行为型）', slug: 'command' },
+        { title: '模板方法（行为型）', slug: 'template-method' },
+        { title: '迭代器（行为型）', slug: 'iterator' },
+        { title: '状态（行为型）', slug: 'state' },
+        { title: '责任链（行为型）', slug: 'chain-of-responsibility' },
+        { title: '中介者（行为型）', slug: 'mediator' },
+        { title: '备忘录（行为型）', slug: 'memento' },
+        { title: '访问者（行为型）', slug: 'visitor' },
+        { title: '解释器（行为型）', slug: 'interpreter' }
       ]
     }
   ]
