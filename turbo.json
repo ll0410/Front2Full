@@ -7,7 +7,7 @@
     },
     "build": {
       "dependsOn": ["^build"],
-      "outputs": [".vitepress/dist/**"]
+      "outputs": [".vitepress/dist/**", "dist/**"]
     },
     "preview": {
       "cache": false,

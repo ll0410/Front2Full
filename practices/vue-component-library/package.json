@@ -1,0 +1,17 @@
+{
+  "name": "vue-component-library-practice",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build:components": "pnpm --filter @vcl/components build",
+    "build:playground": "pnpm --filter @vcl/playground build",
+    "test": "pnpm --filter @vcl/components test",
+    "test:components": "pnpm --filter @vcl/components test",
+    "storybook": "pnpm --filter @vcl/components storybook",
+    "playground": "pnpm --filter @vcl/playground dev",
+    "docs": "pnpm --dir ../../apps/site dev"
+  }
+}

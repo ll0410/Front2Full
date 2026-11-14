@@ -218,9 +218,35 @@ export const columns: Column[] = [
       {
         slug: 'vue-component-library',
         column: 'engineering-practice',
-        status: 'planned',
+        status: 'published',
         title: 'Vue 组件库开发指南',
-        description: '从组件设计、文档、测试到打包发布的全流程实践。'
+        description:
+          '从架构、开发、测试、文档到发布，完整走一遍 Vue 3 组件库的搭建过程。',
+        parts: [
+          {
+            title: '第 1 部分 · 开发指南',
+            articles: [
+              { title: '架构设计与技术选型', slug: 'architecture' },
+              { title: 'Monorepo 项目初始化', slug: 'monorepo-init' },
+              { title: '组件开发规范与流程', slug: 'component-dev' },
+              { title: 'Storybook 组件开发', slug: 'storybook' },
+              { title: '单元测试策略', slug: 'testing' },
+              { title: 'VitePress 文档站', slug: 'docs-site' },
+              { title: '构建与 npm 发布', slug: 'build-publish' },
+              { title: '实战：从零造一个 Button', slug: 'button-example' },
+              { title: '企业内使用', slug: 'enterprise-usage' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 组件实现',
+            articles: [
+              { title: 'Button 按钮', slug: 'button' },
+              { title: 'Input 输入框', slug: 'input' },
+              { title: 'Select 选择器', slug: 'select' },
+              { title: 'Dialog 对话框', slug: 'dialog' }
+            ]
+          }
+        ]
       },
       {
         slug: 'release-pipeline',

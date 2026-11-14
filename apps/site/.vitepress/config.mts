@@ -1,15 +1,28 @@
 import { defineConfig } from 'vitepress'
+import { fileURLToPath, URL } from 'node:url'
 import { columns } from './data/catalog'
 import { buildSidebar } from './utils/sidebar'
 
 // 部署到 GitHub Pages 项目页等子路径时，把 base 改成 '/<repo>/'。
 const base = '/'
 
+// 组件库实践项目的源码入口，供 Markdown 中的 <Button /> 等示例直接渲染。
+const componentsEntry = fileURLToPath(
+  new URL('../../../practices/vue-component-library/packages/components/src/index.ts', import.meta.url)
+)
+
 export default defineConfig({
   lang: 'zh-CN',
   title: 'Front2Full',
   description: '从前端出发，沿技术栈走到全栈',
   base,
+  vite: {
+    resolve: {
+      alias: {
+        '@vcl/components': componentsEntry
+      }
+    }
+  },
   cleanUrls: true,
   // 新仓库暂无提交历史，git 时间戳不可用；原文更新日期在专题首页标注。
   lastUpdated: false,
