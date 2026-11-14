@@ -134,9 +134,56 @@ export const columns: Column[] = [
       {
         slug: 'codex',
         column: 'agent',
-        status: 'planned',
-        title: 'Codex 手册',
-        description: '基于官方文档整理的 Codex CLI 使用参考。'
+        status: 'published',
+        title: 'Codex 中文手册',
+        description: '基于 Codex CLI v0.167.0 官方文档整理的 Codex 中文手册。',
+        parts: [
+          {
+            title: '第 1 部分 · 入门',
+            articles: [
+              { title: '安装、登录与升级', slug: 'installation' },
+              { title: '启动命令行选项', slug: 'cli-flags' },
+              { title: '配置文件 config.toml', slug: 'configuration' },
+              { title: '配置项速查', slug: 'config-reference' },
+              { title: '环境变量', slug: 'environment-variables' },
+              { title: '常见使用场景', slug: 'scenarios' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 核心概念',
+            articles: [
+              { title: '沙箱、审批与安全', slug: 'sandbox-approvals' },
+              { title: 'AGENTS.md 项目指令', slug: 'agents-md' },
+              { title: '模型与推理', slug: 'models' }
+            ]
+          },
+          {
+            title: '第 3 部分 · 命令参考',
+            articles: [
+              { title: '斜杠命令', slug: 'slash-commands' },
+              { title: '非交互模式 codex exec', slug: 'exec' },
+              { title: '会话管理', slug: 'sessions' },
+              { title: '代码审查', slug: 'review' }
+            ]
+          },
+          {
+            title: '第 4 部分 · 进阶',
+            articles: [
+              { title: '命令规则 Rules', slug: 'rules' },
+              { title: 'MCP 集成', slug: 'mcp' },
+              { title: 'Skills 技能', slug: 'skills' },
+              { title: '插件', slug: 'plugins' },
+              { title: 'Hooks', slug: 'hooks' },
+              { title: '子代理', slug: 'subagents' },
+              { title: 'SDK 与 App Server', slug: 'sdk-app-server' },
+              { title: 'Codex Cloud、GitHub 与 IDE', slug: 'cloud-integrations' }
+            ]
+          },
+          {
+            title: '第 5 部分 · 其它',
+            articles: [{ title: '更新日志', slug: 'changelog' }]
+          }
+        ]
       }
     ]
   },
