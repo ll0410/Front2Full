@@ -329,9 +329,70 @@ export const columns: Column[] = [
       {
         slug: 'nginx',
         column: 'tools',
-        status: 'planned',
+        status: 'published',
         title: 'Nginx 配置详解',
-        description: '逐指令讲清语法、取值、上下文、继承规则与常见误配。'
+        description: '逐指令讲清语法、取值、上下文、继承规则与常见误配。',
+        parts: [
+          {
+            title: '第 0 部分 · 基础',
+            articles: [
+              { title: '配置文件语法', slug: 'config-syntax' },
+              { title: '指令、上下文与继承', slug: 'contexts' },
+              { title: 'nginx 如何处理请求', slug: 'request-processing' }
+            ]
+          },
+          {
+            title: '第 1 部分 · 核心指令',
+            articles: [
+              { title: '核心模块指令', slug: 'core-module' },
+              { title: 'server 与 listen', slug: 'server-listen' },
+              { title: 'location 匹配规则', slug: 'location' },
+              { title: 'root、alias 与 try_files', slug: 'root-alias' },
+              { title: '变量', slug: 'variables' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 代理与上游',
+            articles: [
+              { title: 'proxy 反向代理', slug: 'proxy' },
+              { title: 'upstream 负载均衡', slug: 'upstream' },
+              { title: 'FastCGI、uWSGI 与 gRPC', slug: 'fastcgi-grpc' }
+            ]
+          },
+          {
+            title: '第 3 部分 · TLS 与协议',
+            articles: [
+              { title: 'SSL/TLS 配置', slug: 'ssl' },
+              { title: 'HTTP/2 与 HTTP/3', slug: 'http2-http3' }
+            ]
+          },
+          {
+            title: '第 4 部分 · 性能',
+            articles: [
+              { title: '代理缓存', slug: 'caching' },
+              { title: '压缩与静态文件', slug: 'static-perf' }
+            ]
+          },
+          {
+            title: '第 5 部分 · 访问控制',
+            articles: [{ title: '访问控制与限流', slug: 'access-limits' }]
+          },
+          {
+            title: '第 6 部分 · 日志与重写',
+            articles: [
+              { title: '日志', slug: 'logging' },
+              { title: 'rewrite、return 与 if', slug: 'rewrite' },
+              { title: 'map、geo 与 split_clients', slug: 'map-geo' }
+            ]
+          },
+          {
+            title: '第 7 部分 · stream 与收尾',
+            articles: [
+              { title: 'stream：TCP/UDP 代理', slug: 'stream' },
+              { title: '常见误配速查', slug: 'recap' }
+            ]
+          }
+        ]
       }
     ]
   },
