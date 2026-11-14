@@ -330,6 +330,54 @@ const webSecurity: Topic = {
   ]
 }
 
+const ssr: Topic = {
+  slug: 'ssr',
+  column: 'computer-programming',
+  status: 'published',
+  title: 'SSR 从入门到精通',
+  description:
+    '从 CSR 的痛点出发，把服务端渲染的原理、流式、服务端组件、边缘渲染一路讲透，并用近一半篇幅深挖 SSR 的成败命门——缓存。',
+  parts: [
+    {
+      title: '第 1 部分 · 渲染：从客户端到服务端',
+      articles: [
+        { title: 'CSR 的痛点 · 为什么要把渲染搬回服务端', slug: 'csr-pain' },
+        { title: 'SSR 是什么 · 一次请求的服务端旅程', slug: 'what-is-ssr' },
+        { title: '水合 · 把死的 HTML 救活', slug: 'hydration' },
+        { title: '渲染光谱 · CSR / SSR / SSG / ISR 一图看清', slug: 'rendering-spectrum' }
+      ]
+    },
+    {
+      title: '第 2 部分 · 更聪明地渲染',
+      articles: [
+        { title: '流式渲染 · 别等全部，边算边发', slug: 'streaming' },
+        { title: '服务端组件 · 只在服务端跑的那部分', slug: 'server-components' },
+        { title: '边缘渲染 · 把服务端搬到离用户最近的地方', slug: 'edge-rendering' }
+      ]
+    },
+    {
+      title: '第 3 部分 · 缓存',
+      articles: [
+        { title: '为什么 SSR 必须缓存 · 渲染一次，服务千次', slug: 'why-cache' },
+        { title: 'HTTP 缓存基石 · Cache-Control 全家桶', slug: 'http-caching' },
+        { title: 'CDN / 边缘缓存 · SSR 的 HTML 怎么被缓存', slug: 'cdn-caching' },
+        { title: 'stale-while-revalidate · 又快，又不太旧', slug: 'swr' },
+        { title: '增量静态再生 · SSG 与 SSR 的中间态', slug: 'isr' },
+        { title: '数据层缓存 · 缓存数据，而不是 HTML', slug: 'data-cache' },
+        { title: '缓存失效 · TTL、按路径、按标签、按需', slug: 'cache-invalidation' },
+        { title: '个性化与缓存 · 每人不同的页面怎么缓存', slug: 'personalization' }
+      ]
+    },
+    {
+      title: '第 4 部分 · 上生产',
+      articles: [
+        { title: '量化与排查 · TTFB、LCP 与缓存命中率', slug: 'measuring' },
+        { title: '收尾 · 决策树与常见坑', slug: 'recap' }
+      ]
+    }
+  ]
+}
+
 export const columns: Column[] = [
   {
     slug: 'agent',
@@ -614,13 +662,7 @@ export const columns: Column[] = [
       http11,
       http2And3,
       webSecurity,
-      {
-        slug: 'ssr',
-        column: 'computer-programming',
-        status: 'planned',
-        title: 'SSR 从入门到精通',
-        description: '从 CSR 的痛点讲到流式渲染、服务端组件与边缘渲染。'
-      }
+      ssr
     ]
   },
   {
