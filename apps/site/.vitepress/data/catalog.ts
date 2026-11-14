@@ -838,9 +838,46 @@ export const columns: Column[] = [
       {
         slug: 'llm-anatomy',
         column: 'llm',
-        status: 'planned',
+        status: 'published',
         title: 'AI 大模型解构',
-        description: '拆开主流开源大模型的“发动机盖”。'
+        description: '拆开 Qwen、Llama、DeepSeek、GLM、Kimi 等主流开源大模型的“发动机盖”。',
+        parts: [
+          {
+            title: '先看它们有多像',
+            articles: [{ title: '共同骨架 · 先看它们有多像', slug: 'common-skeleton' }]
+          },
+          {
+            title: '主线一 · 省 KV 缓存',
+            articles: [
+              { title: '注意力 · 从 MHA 到 MQA、GQA、MLA', slug: 'attention-mha-gqa-mla' },
+              { title: '滑动窗口 · Gemma 与 GPT-OSS 的局部注意力', slug: 'sliding-window' }
+            ]
+          },
+          {
+            title: '主线二 · 稀疏化 MoE',
+            articles: [
+              { title: '稠密 vs 稀疏 · MoE 为什么突然统治了大模型', slug: 'moe-dense-vs-sparse' },
+              { title: 'MoE 的三个旋钮 · 专家数、激活数、共享专家', slug: 'moe-knobs' },
+              { title: '让 MoE 训得稳、又均衡', slug: 'moe-stability' }
+            ]
+          },
+          {
+            title: '其余关键维度',
+            articles: [
+              { title: '归一化 · RMSNorm、Pre / Post / 三明治、QK-Norm', slug: 'normalization' },
+              { title: '位置编码与长上下文 · RoPE、YaRN，与 NoPE 的挑衅', slug: 'positional-encoding' },
+              { title: '训练侧的花样 · MTP、FP8、Muon', slug: 'training-tricks' },
+              { title: '宽还是深，以及那些小执念', slug: 'width-depth-quirks' }
+            ]
+          },
+          {
+            title: '收尾',
+            articles: [
+              { title: '四张脸谱 · DeepSeek / Llama / Qwen / GLM 的组合拳', slug: 'model-profiles' },
+              { title: '一张大表 + 趋势', slug: 'recap-and-trends' }
+            ]
+          }
+        ]
       }
     ]
   },
