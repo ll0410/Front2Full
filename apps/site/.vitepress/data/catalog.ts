@@ -559,6 +559,276 @@ export const columns: Column[] = [
     tagline: '从 tokenizer 到推理引擎，拆开大模型这台机器。',
     topics: [
       {
+        slug: 'bit-to-agi',
+        column: 'llm',
+        status: 'published',
+        title: '从 Bit 到 AGI',
+        description: '用程序员视角，从比特、数学、信息论一路讲到 Transformer、训练、推理与 AGI，共十二阶段 186 篇。',
+        parts: [
+          {
+            title: '第 1 章 · 比特（Bit）',
+            articles: [
+              { title: '本章导读', slug: '01-bits' },
+              { title: '为什么 AI 最后只是比特', slug: '01-bits/why-ai-is-bits' },
+              { title: '为什么世界只有 0 和 1', slug: '01-bits/why-world-is-01' },
+              { title: 'CPU 如何理解世界', slug: '01-bits/how-cpu-understands-world' },
+              { title: '整数如何表示', slug: '01-bits/integer-representation' },
+              { title: '浮点数为什么会有误差', slug: '01-bits/floating-point-error' },
+              { title: '图片为什么可以压缩', slug: '01-bits/why-images-compress' },
+              { title: '为什么视频可以压缩', slug: '01-bits/why-video-compresses' },
+              { title: '声音为什么可以数字化', slug: '01-bits/why-audio-digitizes' },
+              { title: '文字为什么最后都是 UTF-8', slug: '01-bits/why-text-is-utf8' },
+              { title: '文件是什么', slug: '01-bits/what-is-a-file' },
+              { title: '内存是什么', slug: '01-bits/what-is-memory' },
+              { title: 'Cache 是什么', slug: '01-bits/what-is-cache' },
+              { title: 'GPU 为什么快', slug: '01-bits/why-gpu-is-fast' },
+              { title: 'SIMD 是什么', slug: '01-bits/what-is-simd' },
+              { title: '矩阵为什么连续存储', slug: '01-bits/why-matrices-are-contiguous' },
+              { title: '为什么 AI 喜欢矩阵', slug: '01-bits/why-ai-likes-matrices' },
+              { title: '位、字节与寻址', slug: '01-bits/bits-and-bytes' },
+              { title: '大端与小端', slug: '01-bits/endianness' },
+              { title: '从比特到程序', slug: '01-bits/from-bits-to-programs' },
+              { title: '第一章总结', slug: '01-bits/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 2 章 · 数学（Math）',
+            articles: [
+              { title: '本章导读', slug: '02-math' },
+              { title: '向量是什么', slug: '02-math/what-is-a-vector' },
+              { title: '矩阵是什么', slug: '02-math/what-is-a-matrix' },
+              { title: '为什么矩阵乘法这么重要', slug: '02-math/why-matrix-multiply-matters' },
+              { title: '梯度是什么', slug: '02-math/what-is-gradient' },
+              { title: '导数为什么可以学习', slug: '02-math/why-derivatives-enable-learning' },
+              { title: '偏导数是什么', slug: '02-math/what-is-partial-derivative' },
+              { title: '链式法则是什么', slug: '02-math/chain-rule' },
+              { title: '为什么损失函数可以下降', slug: '02-math/why-loss-can-descend' },
+              { title: '概率是什么', slug: '02-math/what-is-probability' },
+              { title: '贝叶斯是什么', slug: '02-math/what-is-bayes' },
+              { title: '点积是什么', slug: '02-math/dot-product' },
+              { title: '范数与距离', slug: '02-math/norms-and-distance' },
+              { title: '特征值的直觉', slug: '02-math/eigenvalues-intuition' },
+              { title: 'Softmax 与 Logits', slug: '02-math/softmax-and-logits' },
+              { title: '第二章总结', slug: '02-math/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 3 章 · 信息（Information）',
+            articles: [
+              { title: '本章导读', slug: '03-information' },
+              { title: '什么是信息', slug: '03-information/what-is-information' },
+              { title: '信息熵是什么', slug: '03-information/what-is-entropy' },
+              { title: '为什么压缩就是去除信息冗余', slug: '03-information/compression-removes-redundancy' },
+              { title: '为什么语言具有统计规律', slug: '03-information/language-has-statistics' },
+              { title: '为什么 GPT 可以预测下一个 Token', slug: '03-information/why-gpt-predicts-next-token' },
+              { title: '互信息是什么', slug: '03-information/mutual-information' },
+              { title: '交叉熵是什么', slug: '03-information/cross-entropy' },
+              { title: 'KL 散度是什么', slug: '03-information/kl-divergence' },
+              { title: '预测即压缩', slug: '03-information/prediction-is-compression' },
+              { title: '第三章总结', slug: '03-information/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 4 章 · 神经元（Neuron）',
+            articles: [
+              { title: '本章导读', slug: '04-neural-networks' },
+              { title: '什么是神经元', slug: '04-neural-networks/what-is-neuron' },
+              { title: '为什么要激活函数', slug: '04-neural-networks/why-activation-functions' },
+              { title: 'ReLU 为什么成功', slug: '04-neural-networks/why-relu-wins' },
+              { title: 'Sigmoid 为什么失败', slug: '04-neural-networks/why-sigmoid-fails' },
+              { title: 'MLP 是什么', slug: '04-neural-networks/what-is-mlp' },
+              { title: 'CNN 为什么成功', slug: '04-neural-networks/why-cnn-succeeds' },
+              { title: 'RNN 为什么消失', slug: '04-neural-networks/why-rnn-vanishes' },
+              { title: 'LSTM 解决了什么', slug: '04-neural-networks/what-lstm-solves' },
+              { title: 'Attention 为什么出现', slug: '04-neural-networks/why-attention-emerged' },
+              { title: '前向传播是什么', slug: '04-neural-networks/forward-pass' },
+              { title: '反向传播是什么', slug: '04-neural-networks/backward-pass' },
+              { title: '权重初始化', slug: '04-neural-networks/weight-initialization' },
+              { title: '批归一化是什么', slug: '04-neural-networks/batch-normalization' },
+              { title: 'Dropout 是什么', slug: '04-neural-networks/dropout' },
+              { title: '过拟合与正则化', slug: '04-neural-networks/overfitting-and-regularization' },
+              { title: '损失函数家族', slug: '04-neural-networks/loss-functions' },
+              { title: '优化器：SGD 与 Adam', slug: '04-neural-networks/optimizer-sgd-adam' },
+              { title: '从感知机到深度网络', slug: '04-neural-networks/from-perceptron-to-deep' },
+              { title: '万能近似定理的直觉', slug: '04-neural-networks/universal-approximation' },
+              { title: '第四章总结', slug: '04-neural-networks/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 5 章 · Transformer',
+            articles: [
+              { title: '本章导读', slug: '05-transformer' },
+              { title: 'Embedding 是什么', slug: '05-transformer/what-is-embedding' },
+              { title: 'Position Encoding', slug: '05-transformer/position-encoding' },
+              { title: 'Self Attention', slug: '05-transformer/self-attention' },
+              { title: 'Q、K、V 是什么', slug: '05-transformer/qkv' },
+              { title: 'Residual 连接', slug: '05-transformer/residual-connection' },
+              { title: 'LayerNorm', slug: '05-transformer/layer-norm' },
+              { title: 'Feed Forward 层', slug: '05-transformer/feed-forward' },
+              { title: 'Multi Head Attention', slug: '05-transformer/multi-head-attention' },
+              { title: 'Decoder 是什么', slug: '05-transformer/decoder' },
+              { title: 'Encoder 是什么', slug: '05-transformer/encoder' },
+              { title: 'Encoder-Decoder 架构', slug: '05-transformer/encoder-decoder' },
+              { title: '为什么 Transformer 统一世界', slug: '05-transformer/why-transformer-unifies' },
+              { title: 'Attention 的复杂度', slug: '05-transformer/attention-complexity' },
+              { title: '位置编码的变体', slug: '05-transformer/positional-encoding-variants' },
+              { title: 'Pre-Norm 与 Post-Norm', slug: '05-transformer/pre-norm-vs-post-norm' },
+              { title: 'BERT 与 GPT 的区别', slug: '05-transformer/bert-vs-gpt' },
+              { title: '缩放定律入门', slug: '05-transformer/scaling-laws-intro' },
+              { title: '从 RNN 到 Transformer', slug: '05-transformer/from-rnn-to-transformer' },
+              { title: 'Transformer 块的解剖', slug: '05-transformer/transformer-block-anatomy' },
+              { title: '第五章总结', slug: '05-transformer/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 6 章 · Token',
+            articles: [
+              { title: '本章导读', slug: '06-tokenizer' },
+              { title: 'Token 是什么', slug: '06-tokenizer/what-is-token' },
+              { title: '为什么不用汉字', slug: '06-tokenizer/why-not-chinese-char' },
+              { title: '为什么不用单词', slug: '06-tokenizer/why-not-english-word' },
+              { title: 'BPE 是什么', slug: '06-tokenizer/what-is-bpe' },
+              { title: 'SentencePiece 是什么', slug: '06-tokenizer/what-is-sentencepiece' },
+              { title: '为什么 Token 越来越多', slug: '06-tokenizer/why-tokens-grow' },
+              { title: '为什么中文 Token 更贵', slug: '06-tokenizer/why-chinese-tokens-cost-more' },
+              { title: '词表大小如何选', slug: '06-tokenizer/vocabulary-size' },
+              { title: 'Tokenization 的坑', slug: '06-tokenizer/tokenization-pitfalls' },
+              { title: '第六章总结', slug: '06-tokenizer/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 7 章 · 训练（Training）',
+            articles: [
+              { title: '本章导读', slug: '07-training' },
+              { title: '预训练是什么', slug: '07-training/what-is-pretraining' },
+              { title: 'SFT 是什么', slug: '07-training/what-is-sft' },
+              { title: 'RLHF 是什么', slug: '07-training/what-is-rlhf' },
+              { title: 'DPO 是什么', slug: '07-training/what-is-dpo' },
+              { title: 'GRPO 是什么', slug: '07-training/what-is-grpo' },
+              { title: 'MoE 是什么', slug: '07-training/what-is-moe' },
+              { title: 'LoRA 是什么', slug: '07-training/what-is-lora' },
+              { title: 'QLoRA 是什么', slug: '07-training/what-is-qlora' },
+              { title: '蒸馏是什么', slug: '07-training/distillation' },
+              { title: 'Checkpoint 是什么', slug: '07-training/checkpoint' },
+              { title: '数据配比', slug: '07-training/data-mixing' },
+              { title: '学习率调度', slug: '07-training/learning-rate-schedule' },
+              { title: '梯度累积', slug: '07-training/gradient-accumulation' },
+              { title: '混合精度训练', slug: '07-training/mixed-precision-training' },
+              { title: '分布式训练概览', slug: '07-training/distributed-training-overview' },
+              { title: '评估指标', slug: '07-training/evaluation-metrics' },
+              { title: '对齐概览', slug: '07-training/alignment-overview' },
+              { title: '奖励模型', slug: '07-training/reward-model' },
+              { title: '训练稳定性', slug: '07-training/training-stability' },
+              { title: '第七章总结', slug: '07-training/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 8 章 · 推理（Inference）',
+            articles: [
+              { title: '本章导读', slug: '08-inference' },
+              { title: 'KV Cache 是什么', slug: '08-inference/what-is-kv-cache' },
+              { title: 'Paged Attention', slug: '08-inference/paged-attention' },
+              { title: 'Flash Attention', slug: '08-inference/flash-attention' },
+              { title: 'Continuous Batching', slug: '08-inference/continuous-batching' },
+              { title: 'Tensor Parallel', slug: '08-inference/tensor-parallel' },
+              { title: 'Pipeline Parallel', slug: '08-inference/pipeline-parallel' },
+              { title: 'Speculative Decoding', slug: '08-inference/speculative-decoding' },
+              { title: 'Sampling 是什么', slug: '08-inference/sampling' },
+              { title: 'Temperature', slug: '08-inference/temperature' },
+              { title: 'TopK', slug: '08-inference/top-k' },
+              { title: 'TopP', slug: '08-inference/top-p' },
+              { title: 'Prefix Caching', slug: '08-inference/prefix-caching' },
+              { title: '推理量化', slug: '08-inference/quantization-inference' },
+              { title: '延迟与吞吐', slug: '08-inference/latency-vs-throughput' },
+              { title: '第八章总结', slug: '08-inference/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 9 章 · GPU',
+            articles: [
+              { title: '本章导读', slug: '09-gpu' },
+              { title: 'CUDA 是什么', slug: '09-gpu/what-is-cuda' },
+              { title: 'HBM 是什么', slug: '09-gpu/what-is-hbm' },
+              { title: 'NVLink 是什么', slug: '09-gpu/what-is-nvlink' },
+              { title: 'PCIe 是什么', slug: '09-gpu/what-is-pcie' },
+              { title: 'Warp 是什么', slug: '09-gpu/what-is-warp' },
+              { title: 'SM 是什么', slug: '09-gpu/what-is-sm' },
+              { title: 'Tensor Core 与 TFLOPS', slug: '09-gpu/tensor-core' },
+              { title: '为什么 GPU 这么快', slug: '09-gpu/why-gpu-so-fast' },
+              { title: '为什么显存这么重要', slug: '09-gpu/why-vram-matters' },
+              { title: '第九章总结', slug: '09-gpu/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 10 章 · 自己训练一个模型',
+            articles: [
+              { title: '本章导读', slug: '10-train-your-llm' },
+              { title: '收集数据', slug: '10-train-your-llm/collect-data' },
+              { title: '清洗数据', slug: '10-train-your-llm/clean-data' },
+              { title: '训练 Tokenizer', slug: '10-train-your-llm/build-tokenizer' },
+              { title: '预训练模型', slug: '10-train-your-llm/pretrain-model' },
+              { title: '验证模型', slug: '10-train-your-llm/validate-model' },
+              { title: '保存 Checkpoint', slug: '10-train-your-llm/save-checkpoint' },
+              { title: '跑推理', slug: '10-train-your-llm/run-inference' },
+              { title: '部署模型', slug: '10-train-your-llm/deploy-model' },
+              { title: 'OpenAI API 兼容', slug: '10-train-your-llm/openai-api-compat' },
+              { title: 'MCP 集成', slug: '10-train-your-llm/mcp-integration' },
+              { title: '选择基座模型', slug: '10-train-your-llm/pick-base-model' },
+              { title: '微调 SFT', slug: '10-train-your-llm/fine-tune-sft' },
+              { title: '跑 Benchmark', slug: '10-train-your-llm/evaluate-benchmarks' },
+              { title: '监控训练', slug: '10-train-your-llm/monitor-training' },
+              { title: '从失败中恢复', slug: '10-train-your-llm/recover-from-failure' },
+              { title: '数据集格式', slug: '10-train-your-llm/dataset-format' },
+              { title: '硬件规划', slug: '10-train-your-llm/hardware-planning' },
+              { title: '成本估算', slug: '10-train-your-llm/cost-estimation' },
+              { title: '发布你的模型', slug: '10-train-your-llm/publish-your-model' },
+              { title: '第十章总结', slug: '10-train-your-llm/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 11 章 · 工程化（Serving）',
+            articles: [
+              { title: '本章导读', slug: '11-engineering' },
+              { title: 'vLLM', slug: '11-engineering/vllm' },
+              { title: 'SGLang', slug: '11-engineering/sglang' },
+              { title: 'TensorRT-LLM', slug: '11-engineering/tensorrt-llm' },
+              { title: 'DeepSpeed', slug: '11-engineering/deepspeed' },
+              { title: 'Megatron', slug: '11-engineering/megatron' },
+              { title: 'Ray', slug: '11-engineering/ray' },
+              { title: 'Kubernetes', slug: '11-engineering/kubernetes' },
+              { title: 'LiteLLM', slug: '11-engineering/litellm' },
+              { title: 'Gateway', slug: '11-engineering/gateway' },
+              { title: '可观测性', slug: '11-engineering/observability' },
+              { title: '自动扩缩容', slug: '11-engineering/autoscaling' },
+              { title: '模型注册表', slug: '11-engineering/model-registry' },
+              { title: 'A/B 测试', slug: '11-engineering/ab-testing' },
+              { title: '成本治理', slug: '11-engineering/cost-governance' },
+              { title: '第十一章总结', slug: '11-engineering/chapter-summary' }
+            ]
+          },
+          {
+            title: '第 12 章 · 未来（AGI）',
+            articles: [
+              { title: '本章导读', slug: '12-future' },
+              { title: 'Agent 是什么', slug: '12-future/what-is-agent' },
+              { title: 'Memory', slug: '12-future/memory' },
+              { title: 'Tool', slug: '12-future/tool-use' },
+              { title: 'MCP', slug: '12-future/mcp-future' },
+              { title: 'Computer Use', slug: '12-future/computer-use' },
+              { title: 'Robotics', slug: '12-future/robotics' },
+              { title: 'World Model', slug: '12-future/world-model' },
+              { title: 'AGI 路线图', slug: '12-future/agi-roadmap' },
+              { title: '安全与对齐', slug: '12-future/safety-and-alignment' },
+              { title: '第十二章总结', slug: '12-future/chapter-summary' }
+            ]
+          },
+          {
+            title: '附录 · AI 术语大全',
+            articles: [{ title: 'AI术语大全', slug: 'ai-glossary' }]
+          }
+        ]
+      },
+      {
         slug: 'nanogpt',
         column: 'llm',
         status: 'planned',
