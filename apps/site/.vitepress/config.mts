@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import mathjax3 from 'markdown-it-mathjax3'
 import { fileURLToPath, URL } from 'node:url'
 import { columns } from './data/catalog'
 import { buildSidebar } from './utils/sidebar'
@@ -31,10 +32,17 @@ export default defineConfig({
     theme: {
       light: 'github-light',
       dark: 'github-dark'
+    },
+    config(md) {
+      md.use(mathjax3)
     }
   },
-  head: [['meta', { name: 'theme-color', content: '#18794e' }]],
+  head: [
+    ['meta', { name: 'theme-color', content: '#18794e' }],
+    ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}logo.svg` }]
+  ],
   themeConfig: {
+    logo: `${base}logo.svg`,
     outline: {
       level: [2, 3],
       label: '本页目录'

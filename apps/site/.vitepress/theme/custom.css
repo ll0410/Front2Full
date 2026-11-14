@@ -50,6 +50,11 @@
   --vp-home-hero-name-background: linear-gradient(78deg, #f7d336 30%, #8ae99c);
 }
 
+/* logo 原图为深色，暗色模式下反转让其在深色导航栏上可见 */
+.dark .VPNavBarTitle .logo {
+  filter: invert(1);
+}
+
 .vp-doc {
   line-height: 1.75;
 }
