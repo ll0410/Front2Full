@@ -984,6 +984,42 @@ export const columns: Column[] = [
             articles: [{ title: '回顾与展望', slug: 'recap' }]
           }
         ]
+      },
+      {
+        slug: 'jev',
+        column: 'llm',
+        status: 'published',
+        title: 'Jev 原理与应用',
+        description:
+          '用大白话拆解 TypeSafe AI 在 2026 年 9 月发布的 Jev——一个不写字、只给“带概率的决策”的 System One 模型：它是什么、为什么快、校准是什么意思、怎么调用、能用在哪、哪些话还只是官方口径。',
+        parts: [
+          {
+            title: '第 0 部分 · 先看全貌',
+            articles: [
+              { title: 'Jev 是什么：一个不说话的模型', slug: 'what-is-jev' },
+              { title: 'System One：快思考模型', slug: 'system-one' }
+            ]
+          },
+          {
+            title: '第 1 部分 · 原理',
+            articles: [
+              { title: '原理一：一次给出全部答案的并行采样', slug: 'parallel-sampler' },
+              { title: '原理二：RLCD 与概率校准', slug: 'rlcd' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 应用',
+            articles: [
+              { title: '上手：类型、调用与计价', slug: 'using-jev' },
+              { title: '应用：从分类路由到玩 Doom', slug: 'applications' },
+              { title: '局限与展望', slug: 'limits-outlook' }
+            ]
+          },
+          {
+            title: '收尾',
+            articles: [{ title: '回顾', slug: 'recap' }]
+          }
+        ]
       }
     ]
   },
