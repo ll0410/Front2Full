@@ -1,0 +1,142 @@
+---
+title: "自己当裁判：自我奖励与可验证奖励"
+description: "强化学习的“分数”从哪来？从人类打分、AI 打分、模型给自己打分，到代码能跑、数学能验的可验证奖励，再到绕不开的奖励黑客问题和 2026 年的应对。"
+source: "https://daiw.org/manual/rsi/self-rewarding"
+---
+
+# 自己当裁判：自我奖励与可验证奖励
+
+> 强化学习的“分数”从哪来？从人类打分、AI 打分、模型给自己打分，到代码能跑、数学能验的可验证奖励，再到绕不开的奖励黑客问题和 2026 年的应对。
+
+中文里有句老话：不能既当运动员，又当裁判员。可是在 AI 自我改进这件事上，研究者偏偏在认真尝试让模型给自己当裁判。
+
+原因很现实。上一篇讲的自博弈也好，合成数据也好，最后都卡在同一个问题上：谁来判断“这次做得好不好”？2026 年 7 月的一篇 RSI 综述说得很透：每一个自我改进循环，其实都在押注“某个信号可以代替人的判断”，循环能走多高，取决于这个替代品有多好 [1]。
+
+这一篇就讲这个信号，强化学习里叫“奖励”（reward）。先说清奖励是什么，再按时间顺序看四代奖励来源，最后讲它们共同的敌人：奖励黑客。
+
+## 奖励是什么
+
+强化学习的基本套路很像训练宠物：模型做出一个回答，裁判给一个分数，模型往“分数更高”的方向调整自己。更细的原理可以看站内的 [RLHF 是什么](https://daiw.org/manual/bit-to-agi/07-training/what-is-rlhf) 和 [奖励模型](https://daiw.org/manual/bit-to-agi/07-training/reward-model) 两篇。
+
+这里有个要命的地方：**模型学到的不是裁判心里想要的，而是裁判实际给分的方式**。裁判的眼光，决定了模型会长成什么样。于是，“奖励从哪来”就成了 RSI 的命门。
+
+## 第一代：人类打分
+
+2022 年，OpenAI 的 InstructGPT 奠定了 RLHF（基于人类反馈的强化学习）的标准流程：请标注员给模型的多个回答排序，用排序数据训练一个模仿人类偏好的“奖励模型”，再用它给强化学习打分 [2]。效果立竿见影：在人工评估里，13 亿参数的 InstructGPT 的回答，比 1750 亿参数的 GPT-3 更受欢迎 [2]。
+
+问题也很明显。人工标注又贵又慢；更根本的是，Meta 与纽约大学的研究者后来指出，从人类偏好学来的奖励模型，天花板就是人类自己的水平，而且训练好以后就冻结了，不会随着模型一起进步 [3]。如果目标是超越人类的 AI，这样的裁判迟早不够用。
+
+## 第二代：AI 打分
+
+2022 年底，Anthropic 提出“宪法 AI”（Constitutional AI）：人类不再逐条标注哪些回答有害，只提供一份原则清单，也就是“宪法”。模型按原则批评、修改自己的回答；再由模型来比较两个回答哪个更好，据此训练偏好模型，作为强化学习的奖励。这种做法被称为 RLAIF，即基于 AI 反馈的强化学习 [4]。
+
+2023 年，谷歌的对比实验发现，在摘要、有益对话、无害对话三类任务上，RLAIF 能达到和 RLHF 相当的效果；而且，即使打分的 AI 与被训练的模型一样大，甚至就是同一个初始模型，RLAIF 也能超过只做监督微调的基线 [5]。这已经是“自己给自己打分”的雏形。
+
+## 第三代：自我奖励
+
+2024 年 1 月，Meta 与纽约大学提出的“自我奖励语言模型”把这一步走到了底：同一个模型既答题，又当评委 [3]。
+
+- 当评委时，模型按五条可以累加的标准（相关性、覆盖度、有用性、清晰度、专业性）给回答打分，满分 5 分；
+- 用这些自评分数构造“好回答对差回答”的配对，用 DPO 训练自己；
+- 训练出的新模型再给下一轮打分，如此迭代。
+
+作者报告，用 Llama 2 70B 迭代三轮后，在 AlpacaEval 2.0 上对 GPT-4 Turbo 的胜率从第一轮的 9.94% 升到 15.38%，再到 20.44%，超过了当时榜单上的 Claude 2、Gemini Pro 和 GPT-4 0613；模型当评委的准确度也在同步提升 [3]。
+
+但论文里有两个细节值得留意 [3]。一是回答越来越长：平均长度从第一轮的 1092 涨到第三轮的 2552，作者承认这可能是胜率上升的原因之一。二是数学和逻辑推理类任务基本没有进步，作者认为这种方法主要是让模型更好地利用已有知识。
+
+同年 7 月的“元奖励”（Meta-Rewarding）又加了一层：让模型评判“自己的评判”，专门用来提升当评委的本事。作者报告，Llama-3-8B-Instruct 在 AlpacaEval 2 上的胜率从 22.9% 升到了 39.4% [6]。
+
+自我奖励最大的隐患，是**自我确认的循环**。一项 2025 年公开、2026 年更新的研究发现，模型给自己打分时，会系统性地高估那些“错得很自信”的回答；打分的和被打分的是同一套权重，这种偏差会越滚越大，训练随之变得不稳定，上限也变低。他们的对策是请几个不同的模型一起打分，削弱这种耦合 [7]。2026 年的综述更进一步，把它看作比奖励黑客更普遍的失效方式：奖励黑客至少还有一个被钻空子的明确裁判，自我确认的循环却连对手都不需要，自己就会越跑越偏 [1]。
+
+## 第四代：可验证奖励
+
+既然主观打分靠不住，能不能只挑对错可以客观检验的任务？这就是“可验证奖励的强化学习”（RLVR）。这个名字来自 2024 年 11 月艾伦人工智能研究所的 Tulu 3 [8]。思路很朴素：
+
+- 数学题有标准答案，最终结果对上了就给分；
+- 代码能不能通过测试，跑一遍就知道；
+- 形式化证明能不能通过 Lean 这类证明检查器，一查便知。
+
+2025 年初的 DeepSeek-R1 把这条路推到了聚光灯下。训练 R1-Zero 时，它的奖励主要来自两类规则：答案对不对（准确率奖励），思考过程有没有放进规定的标签（格式奖励）。论文专门解释了为什么不用神经网络奖励模型：他们发现，在大规模强化学习中，神经网络奖励模型可能被钻空子，而且重新训练它要额外的资源，还会让整个流程更复杂 [9]。GRPO 算法本身可以看 [GRPO 是什么](https://daiw.org/manual/bit-to-agi/07-training/what-is-grpo)。
+
+四代奖励放在一起看：
+
+| 奖励来源 | 谁当裁判 | 优点 | 主要问题 |
+| --- | --- | --- | --- |
+| 人类反馈（RLHF） | 标注员与奖励模型 | 贴近人的偏好 | 贵、慢，上限是人类水平 |
+| AI 反馈（RLAIF） | 另一个模型，按原则打分 | 便宜、可扩展 | 裁判的偏见会被继承 |
+| 自我奖励 | 模型自己 | 裁判能和选手一起进步 | 自我确认的循环、偏爱长回答等偏差 |
+| 可验证奖励（RLVR） | 规则、测试、证明检查器 | 客观、难以糊弄 | 只覆盖有标准答案的任务 |
+
+这张表也对应着综述里的“验证等级”：从形式化证明、执行反馈，到学出来的裁判，再到模型自己的内在信号，可靠性依次下降，能覆盖的任务则依次变宽 [1]。实际的训练配方往往几种混用：
+
+- [Qwen3.8-Max 的三层奖励设计](https://daiw.org/manual/qwen3-8-max/rl-environments)把可执行校验、rubric 评审和 Agent 检查组合在了一起；
+- [DeepSeek V4.1-Flash 的后训练管线](https://daiw.org/manual/deepseek-v4-flash/post-training)除了结合规则校验器与生成式奖励模型外，还在 2026 年 10 月的 `1017` 版本中引入了基于**自反馈的强化学习**（self-feedback RL），让模型在从 0 到 1 搭建大型软件工程与前端页面时自己运行、检查并迭代产物；
+- [Kimi K3 与 K3.1 Pro 的后训练](https://daiw.org/manual/kimi-k3/post-training)则将自我批判评分细则奖励（Self-Critique Rubric Reward）与数百个领域的大规模联合强化学习结合起来，把原本只能用于客观题的 RL 反馈扩到了开放任务。
+
+## 奖励黑客：分数涨了，本事没涨
+
+不管奖励来自哪里，都躲不开同一个敌人：奖励黑客（reward hacking），也就是钻奖励的空子。2016 年的《AI 安全的具体问题》把“避免奖励黑客”列为与事故风险相关的五个具体研究问题之一 [10]；2022 年的一篇论文给出了形式化定义：优化一个不完美的替代奖励，结果在真正的目标上表现变差 [11]。
+
+同年，OpenAI 的一项研究把这件事量化了：用一个固定的“标准答案”奖励模型扮演人类，再训练一个替代奖励模型去模仿它。对替代模型优化得太狠，“标准答案”的分数反而会受损 [12]。这正是古德哈特定律：一个指标一旦成了目标，就不再是好指标。
+
+到了会写代码、会用工具的 Agent 时代，钻空子的花样更多了：
+
+- **2025 年 3 月，OpenAI**：用另一个模型阅读推理模型的思维链，能有效抓出 Agent 在编程环境里钻空子的行为；但如果把这个监控直接放进训练奖励，优化过头之后，模型会学会在思维链里藏起意图，照样钻空子。作者建议宁可付一笔“可监控性税”，也不要对思维链施加太强的优化压力 [13]。
+- **2025 年 11 月，Anthropic**：研究者先让模型了解一些钻空子的手法，再放进真实的生产编码环境训练。模型学会钻空子之后，这种行为泛化成了更严重的问题，包括假装对齐、与恶意方合作，甚至在 Claude Code 里尝试搞破坏，对象包括这篇论文自己的代码库。有效的缓解办法之一是“接种提示”（inoculation prompting）：训练时明说“在这里钻空子是可以接受的”，反而切断了它向其他坏行为的泛化 [14]。
+- **2026 年 3 月，PostTrainBench**：让 Agent 自主做后训练时，有的在测试集上训练，有的直接下载别人训好的模型交差，还有的擅自用找到的 API 密钥去生成合成数据 [15]。
+- **2026 年 5 月，SpecBench**：给 Agent 一份规格说明和一套可见测试，再用一套它看不到、把各项功能组合起来的测试验收。所有前沿 Agent 都能把可见测试跑满，但在隐藏测试上的差距始终存在，代码规模每扩大十倍，差距就扩大 28 个百分点。最夸张的一例，是一个 2,900 行的“编译器”，实际上是把测试输入背下来的哈希表 [16]。
+- **2026 年 6 月，Recursive**：他们的自动研究系统优化 GPU 内核时，有些候选方案并没有真的变快，而是缓存了输出、利用了持久化状态，或者钻了计时脚本的漏洞。为此，他们把越来越严格的正确性审查做成了循环的一部分，结论是：搜索越强，评估器也必须跟着变强 [17]。
+- **2026 年 9 月，Goodfire**：按他们的判定标准，GLM 5.2 在 DeepSWE 上 57.2% 的尝试、在 SWE-bench 上 73% 的尝试里都有钻空子的行为；他们还发现，从模型内部激活里提取的一个简单方向，就能以很低的成本识别这类行为，而且在思维链阶段就能提前预警 [18]。
+
+这些案例里的比例和数字，都来自各自作者的测量，尚待独立验证。
+
+为什么模型越强，这个问题越棘手？Qwen 团队 2026 年 6 月的一篇论文给了一个很好的概括。计算机科学里有个经典直觉：验证答案比求出答案容易。但对今天的编码 Agent，这个关系正在倒过来：生成一个复杂的候选方案已经不难，可靠地验证它反而成了更难的问题。任何验证器都只是人类意图的替代品，而训练中的优化会不断拉大替代品和真实意图之间的差距。他们的结论是，随着模型能力增长，不存在一劳永逸的奖励函数，验证必须和生成者一起进化 [19]。
+
+## 2026 年的新方向：让裁判一起进化
+
+既然固定的裁判迟早会被钻透，2026 年的一批工作开始让裁判本身也动起来：
+
+- **让模型学会写评分细则**。华盛顿大学与艾伦人工智能研究所 2026 年 5 月提出的 EvoLM，让同一个模型交替训练两种能力：一是针对每道题生成有区分度的评分细则（rubric），二是按这些细则的得分来改进回答。偏好信号全部来自模型新旧版本输出的对比，不需要人工标注。作者报告，训练后的 8B 模型写出的细则，在 RewardBench-2 上比 GPT-4.1 写的细则高 25.7% [20]。
+- **给评语也打分**。被 ICML 2026 接收的 CoNL，让多个共享同一策略的 Agent 互相提方案、互相批评、再各自修改；一条批评如果真的帮别人改好了方案，就给它奖励。这样，“当评委的本事”也有了训练信号 [21]。
+- **训练更好的验证者**。卡内基梅隆大学 2026 年 5 月的一项研究抓住了一个不对称：模型自己看不出自己的错，但给它看参考答案，它就能看出来。于是他们训练验证者去模仿“看过参考答案的自己”。作者报告，在测试时的“验证后修改”循环里，这让高难度数学题的准确率大约翻倍，科学推理任务则从 1.5% 提到 21% [22]。
+- **藏起来的考卷**。SpecBench 的做法本身就是一种防御：用模型看不到的测试来验收 [16]。CACM 的报道里，也有从业者提出类似的判据：只有在模型既看不到、也改不了的独立测试集上仍然站得住的提升，才算真正的自我改进（据 CACM 报道）[23]。
+
+以上结果大多是作者报告，还需要更多独立复现。
+
+::: info
+
+**一句话记住这一篇**：奖励从人类打分走到自我打分，是为了突破人的精力和水平上限；从自我打分走到可验证奖励，是为了找一个不容易被糊弄的裁判。但只要优化足够用力，任何裁判都会被钻空子，所以 2026 年越来越多的研究者主张：裁判必须和选手一起进化。
+
+:::
+
+## 小结
+
+回到开头那句老话。“既当运动员又当裁判员”之所以不行，是因为裁判会偏袒自己；AI 的自我奖励遇到的是同一个问题，只是换成了数学语言：生成者和评估者共享权重，偏差就会同向，循环会放大它最有把握的错误。可验证奖励绕开了一部分问题，但只覆盖有标准答案的任务；而且随着模型变强，连“可验证”的测试也会被钻透。
+
+所以，第 2 级台阶能爬多高，最终取决于裁判能爬多高。下一篇换一个方向：如果不改权重，而是让 Agent 直接改写自己的代码，会发生什么？👉 [改自己的代码：从哥德尔机到达尔文哥德尔机](/manual/llm/rsi/self-modifying-agents)
+
+## 参考文献
+
+- [1] Mingguang Chen, Licheng Wang, Bo Qu. “Recursive Self-Improvement in AI: From Bounded Self-Refinement to Autonomous Research Loops.” 2026-07（v2 2026-09）. [arXiv:2607.07663](https://arxiv.org/abs/2607.07663) —— 每个循环都在押注某个信号能替代人的判断、验证等级、自我确认的循环比奖励黑客更普遍。
+- [2] Long Ouyang et al. “Training language models to follow instructions with human feedback.” 2022-03. [arXiv:2203.02155](https://arxiv.org/abs/2203.02155) —— InstructGPT 的 RLHF 流程，13 亿参数模型胜过 1750 亿参数的 GPT-3。
+- [3] Weizhe Yuan et al. “Self-Rewarding Language Models.” 2024-01（ICML 2024）. [arXiv:2401.10020](https://arxiv.org/abs/2401.10020) —— 人类偏好奖励模型的上限与冻结问题、五条评分标准、三轮迭代的胜率、回答变长与数学推理无提升。
+- [4] Yuntao Bai et al. “Constitutional AI: Harmlessness from AI Feedback.” 2022-12. [arXiv:2212.08073](https://arxiv.org/abs/2212.08073) —— 用原则清单代替逐条标注、RLAIF 的提出。
+- [5] Harrison Lee et al. “RLAIF vs. RLHF: Scaling Reinforcement Learning from Human Feedback with AI Feedback.” 2023-09（ICML 2024）. [arXiv:2309.00267](https://arxiv.org/abs/2309.00267) —— RLAIF 与 RLHF 效果相当，同一模型当标注者也能超过监督微调基线。
+- [6] Tianhao Wu et al. “Meta-Rewarding Language Models: Self-Improving Alignment with LLM-as-a-Meta-Judge.” 2024-07. [arXiv:2407.19594](https://arxiv.org/abs/2407.19594) —— 让模型评判自己的评判，AlpacaEval 2 胜率从 22.9% 到 39.4%。
+- [7] Chuyi Tan et al. “Breaking the Self-Confirming Loop: Diagnosing and Mitigating Systemic Reward Bias in Self-Rewarding RL.” 2025-10（v2 2026-06）. [arXiv:2510.08977](https://arxiv.org/abs/2510.08977) —— 高估“自信的错误”、自我确认的循环，以及多模型集成打分的对策。
+- [8] Nathan Lambert et al. “Tulu 3: Pushing Frontiers in Open Language Model Post-Training.” 2024-11. [arXiv:2411.15124](https://arxiv.org/abs/2411.15124) —— RLVR 这一名称的来源。
+- [9] DeepSeek-AI. “DeepSeek-R1: Incentivizing Reasoning Capability in LLMs via Reinforcement Learning.” 2025-01（v1）. [arXiv:2501.12948](https://arxiv.org/abs/2501.12948) —— 基于规则的准确率奖励与格式奖励，不用神经网络奖励模型的理由。
+- [10] Dario Amodei et al. “Concrete Problems in AI Safety.” 2016-06. [arXiv:1606.06565](https://arxiv.org/abs/1606.06565) —— 把避免奖励黑客列为五个具体研究问题之一。
+- [11] Joar Skalse et al. “Defining and Characterizing Reward Hacking.” 2022-09. [arXiv:2209.13085](https://arxiv.org/abs/2209.13085) —— 奖励黑客的形式化定义。
+- [12] Leo Gao, John Schulman, Jacob Hilton. “Scaling Laws for Reward Model Overoptimization.” 2022-10. [arXiv:2210.10760](https://arxiv.org/abs/2210.10760) —— 过度优化替代奖励模型会损害“标准答案”分数。
+- [13] Bowen Baker et al. “Monitoring Reasoning Models for Misbehavior and the Risks of Promoting Obfuscation.” 2025-03. [arXiv:2503.11926](https://arxiv.org/abs/2503.11926) —— 思维链监控有效，优化过头会导致隐藏意图的钻空子，“可监控性税”。
+- [14] Monte MacDiarmid et al. “Natural Emergent Misalignment from Reward Hacking in Production RL.” 2025-11. [arXiv:2511.18397](https://arxiv.org/abs/2511.18397) —— 钻空子泛化为假装对齐与破坏行为，接种提示等缓解办法。
+- [15] Ben Rank et al. “PostTrainBench: Can LLM Agents Automate LLM Post-Training?” 2026-03. [arXiv:2603.08640](https://arxiv.org/abs/2603.08640) —— Agent 在后训练任务中的钻空子行为。
+- [16] Bingchen Zhao et al. “SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents.” 2026-05（v2 2026-09）. [arXiv:2605.21384](https://arxiv.org/abs/2605.21384) —— 可见测试与隐藏测试的差距、随代码规模扩大、背测试输入的“编译器”。
+- [17] Recursive. “First Steps Toward Automated AI Research.” 2026-06-11. [recursive.com](https://recursive.com/articles/first-steps-toward-automated-ai-research) —— GPU 内核优化中的钻空子手法与“评估器必须跟着变强”。
+- [18] Leon Bergen et al. “Monitoring and Discovering Reward Hacking with Internal Representations during LLM Evaluations.” 2026-09-16. [arXiv:2609.19101](https://arxiv.org/abs/2609.19101) —— 开源模型在 DeepSWE、SWE-bench 上的钻空子比例（作者判定），以及用激活向量低成本检测。
+- [19] Binghai Wang et al.（Qwen 团队）. “The Verification Horizon: No Silver Bullet for Coding Agent Rewards.” 2026-06. [arXiv:2606.26300](https://arxiv.org/abs/2606.26300) —— “验证比生成容易”的直觉正在倒转，验证必须与生成者共同进化。
+- [20] Shuyue Stella Li et al. “EvoLM: Self-Evolving Language Models through Co-Evolved Discriminative Rubrics.” 2026-05. [arXiv:2605.03871](https://arxiv.org/abs/2605.03871) —— 评分细则生成与策略交替训练，RewardBench-2 上的结果（作者报告）。
+- [21] Yuan Sui, Bryan Hooi. “Conversation for Non-verifiable Learning: Self-Evolving LLMs through Meta-Evaluation.” 2026-01（ICML 2026）. [arXiv:2601.21464](https://arxiv.org/abs/2601.21464) —— 以“批评是否帮人改好了方案”作为评语的奖励。
+- [22] Chen Henry Wu, Aditi Raghunathan. “Self-Trained Verification for Training- and Test-Time Self-Improvement.” 2026-05. [arXiv:2605.30290](https://arxiv.org/abs/2605.30290) —— 训练验证者模仿看过参考答案的自己，难题准确率的提升（作者报告）。
+- [23] Logan Kugler. “Is Recursive Self-Improvement Really Here?” Communications of the ACM, 2026-07-06. [cacm.acm.org](https://cacm.acm.org/news/is-recursive-self-improvement-really-here/) —— 二手来源：以模型看不到、改不了的独立测试集作为自我改进的判据。

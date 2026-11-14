@@ -940,6 +940,50 @@ export const columns: Column[] = [
             articles: [{ title: '收尾复盘', slug: 'recap' }]
           }
         ]
+      },
+      {
+        slug: 'rsi',
+        column: 'llm',
+        status: 'published',
+        title: 'RSI 技术探究',
+        description:
+          '用大白话由浅入深地讲“递归自我改进”（RSI）：AI 怎样自己出题、自己打分、改自己的代码、发明算法、参与造下一代 AI，进展怎么量、卡在哪、实验室又为它设了哪些红线。',
+        parts: [
+          {
+            title: '第 0 部分 · 先搞懂概念',
+            articles: [
+              { title: 'RSI 是什么：从“智能爆炸”说起', slug: 'what-is-rsi' },
+              { title: '五级台阶：从自我修正到自主研究', slug: 'rsi-ladder' }
+            ]
+          },
+          {
+            title: '第 1 部分 · 自己教自己',
+            articles: [
+              { title: '自己出题自己练：自博弈与合成数据', slug: 'self-play-data' },
+              { title: '自己当裁判：自我奖励与可验证奖励', slug: 'self-rewarding' }
+            ]
+          },
+          {
+            title: '第 2 部分 · 自己改自己',
+            articles: [
+              { title: '改自己的代码：从哥德尔机到达尔文哥德尔机', slug: 'self-modifying-agents' },
+              { title: '让 AI 发明算法：AlphaEvolve 一族', slug: 'algorithm-discovery' },
+              { title: '自动化 AI 研发：AI 科学家与“参与造自己”的模型', slug: 'automated-research' }
+            ]
+          },
+          {
+            title: '第 3 部分 · 量尺、瓶颈与护栏',
+            articles: [
+              { title: '怎么量进展：时间跨度与研发基准', slug: 'measuring-rsi' },
+              { title: '为什么还没“爆炸”：算力、验证与数据', slug: 'bottlenecks' },
+              { title: '风险与治理：实验室为自我改进设的红线', slug: 'safety-governance' }
+            ]
+          },
+          {
+            title: '收尾',
+            articles: [{ title: '回顾与展望', slug: 'recap' }]
+          }
+        ]
       }
     ]
   },
