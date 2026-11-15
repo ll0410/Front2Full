@@ -1905,7 +1905,7 @@ onMounted(() => {
 
   logoSource = new Image()
   logoSource.onload = tintLogo
-  logoSource.src = '/logo.svg'
+  logoSource.src = `${import.meta.env.BASE_URL}logo.svg`
 
   resizeObserver = new ResizeObserver(() => resize())
   if (canvasRef.value) resizeObserver.observe(canvasRef.value)
