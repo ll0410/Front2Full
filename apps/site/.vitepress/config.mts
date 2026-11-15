@@ -42,7 +42,7 @@ export default defineConfig({
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}logo.svg` }]
   ],
   themeConfig: {
-    logo: 'logo.svg',
+    logo: '/logo.svg',
     outline: {
       level: [2, 3],
       label: '本页目录'
