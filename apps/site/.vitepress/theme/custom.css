@@ -152,10 +152,12 @@
 }
 
 .home-topic {
+  /* 卡片内边距随断点收窄，__meta 的隐藏位移与它保持同步 */
+  --f2f-card-pad: 24px;
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 24px;
+  padding: var(--f2f-card-pad);
   overflow: hidden;
   border: 1px solid var(--f2f-card-bg);
   border-radius: var(--f2f-card-radius);
@@ -233,7 +235,7 @@
   color: var(--vp-c-text-3);
   opacity: 0;
   /* 默认藏在卡片底部之外，hover 时向上移入 */
-  transform: translateY(calc(100% + 24px));
+  transform: translateY(calc(100% + var(--f2f-card-pad)));
   transition:
     color var(--f2f-hover-duration) var(--f2f-hover-ease),
     opacity var(--f2f-hover-duration) var(--f2f-hover-ease),
@@ -400,17 +402,62 @@
 /* ---------- 响应式 ---------- */
 
 @media (max-width: 900px) {
-  .home-column__list {
+  /* 选择器与基础规则保持同等特异性，否则 3 列声明会覆盖这里的列数 */
+  .vp-doc ul.home-column__list {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .topic-grid {
     grid-template-columns: minmax(0, 1fr);
   }
+
+  .home-topic {
+    --f2f-card-pad: 20px;
+  }
+
+  .home-topic__desc {
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+  }
 }
 
 @media (max-width: 640px) {
-  .home-column__list {
+  .home-columns {
+    gap: 32px;
+  }
+
+  .vp-doc ul.home-column__list {
     grid-template-columns: minmax(0, 1fr);
+  }
+
+  .home-topic {
+    --f2f-card-pad: 16px;
+  }
+
+  .home-topic__title {
+    font-size: 15px;
+    line-height: 22px;
+  }
+
+  .home-topic__desc {
+    padding-top: 6px;
+    font-size: 13px;
+    line-height: 22px;
+  }
+
+  .home-topic__meta {
+    padding-top: 6px;
+  }
+}
+
+/* 触屏设备没有 hover：描述与元信息常驻显示，避免信息永远不可见 */
+@media (hover: none) {
+  .home-topic__desc {
+    transform: none;
+  }
+
+  .home-topic__meta {
+    opacity: 1;
+    transform: none;
   }
 }
