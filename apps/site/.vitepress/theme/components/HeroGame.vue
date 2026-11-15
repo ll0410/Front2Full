@@ -38,6 +38,10 @@ const FIRE_RATE_MAX_BONUS = 2
 // 射速加成达到这些档位时，各增加一条子弹线
 const FIRE_RATE_LINE_THRESHOLDS = [0.3, 0.6, 0.9]
 const BULLET_SPEED = 46
+// 非全屏时画布的典型高度（块），用于把「块/秒」速度按画布高度等比缩放，
+// 保证全屏后物体穿越屏幕的耗时不变，游戏节奏不随画布大小变化
+const REFERENCE_HEIGHT = 60
+let speedScale = 1
 const MAX_ENEMIES = 3
 // 每击落这么多台渣古才变身一次
 const TRANSFORM_KILLS = 10
@@ -481,7 +485,8 @@ let walkClock = 0
 const palette = {
   accent: '#18794e',
   bullet: '#18794e',
-  label: '#7f8f9c'
+  label: '#7f8f9c',
+  bg: '#ffffff'
 }
 
 let ctx: CanvasRenderingContext2D | null = null
@@ -534,6 +539,8 @@ const readPalette = () => {
   const accent = styles.getPropertyValue('--vp-c-brand-1').trim() || '#18794e'
   palette.accent = accent
   palette.label = styles.getPropertyValue('--vp-c-text-3').trim() || '#7f8f9c'
+  // 站点主题背景色，全屏时用它填充画布，保持与页面一致
+  palette.bg = styles.getPropertyValue('--vp-c-bg').trim() || '#ffffff'
   // 根据当前深浅主题切换写字楼配色；清空缓存让楼体按新颜色重绘
   const isDark = document.documentElement.classList.contains('dark')
   const bp = isDark ? BUILDING_PALETTES.dark : BUILDING_PALETTES.light
@@ -730,8 +737,8 @@ const collidesWithProps = (x: number, y: number) => {
   const halfW = playerWidth() / 2
   const halfH = playerHeight() / 2
   for (const prop of props) {
-    const propHalfW = prop.sprite.width / 2 - PROP_BLOCK_TOLERANCE
-    const propHalfH = prop.sprite.height / 2 - PROP_BLOCK_TOLERANCE
+    const propHalfW = (prop.sprite.width * speedScale) / 2 - PROP_BLOCK_TOLERANCE
+    const propHalfH = (prop.sprite.height * speedScale) / 2 - PROP_BLOCK_TOLERANCE
     if (propHalfW <= 0 || propHalfH <= 0) continue
     if (
       Math.abs(x - prop.x) < halfW + propHalfW &&
@@ -758,6 +765,19 @@ const resize = () => {
 
   width = Math.max(32, Math.round(rect.width / UNIT))
   height = Math.max(32, Math.round(rect.height / UNIT))
+  // 按画布高度等比缩放所有运动速度，保持穿越屏幕的耗时恒定
+  const prevSpeedScale = speedScale
+  speedScale = height / REFERENCE_HEIGHT
+  const scaleRatio = speedScale / prevSpeedScale
+  if (scaleRatio !== 1) {
+    for (const b of bullets) {
+      b.vx *= scaleRatio
+      b.vy *= scaleRatio
+    }
+    for (const e of enemies) e.speed *= scaleRatio
+    for (const p of props) p.speed *= scaleRatio
+    for (const d of drops) d.speed *= scaleRatio
+  }
   computeScales()
 
   const dpr = Math.min(window.devicePixelRatio || 1, 2)
@@ -789,7 +809,7 @@ const resize = () => {
     for (let i = 0; i < PROP_COUNT; i += 1) spawnProp(true)
   } else {
     props.forEach((prop) => {
-      const halfW = prop.sprite.width / 2
+      const halfW = (prop.sprite.width * speedScale) / 2
       prop.x = clamp(prop.x, halfW, Math.max(halfW, width - halfW))
     })
   }
@@ -873,25 +893,31 @@ const makeBullet = (
   vx: number,
   vy: number,
   opts: Partial<Bullet>
-): Bullet => ({
-  x,
-  y,
-  vx,
-  vy,
-  color: palette.bullet,
-  w: 1,
-  h: 3,
-  pierce: 0,
-  hitIds: new Set<number>(),
-  bounces: 0,
-  homing: 0,
-  damage: 1,
-  life: 3,
-  age: 0,
-  shape: 'rect',
-  trail: false,
-  ...opts
-})
+): Bullet => {
+  const bullet: Bullet = {
+    x,
+    y,
+    vx,
+    vy,
+    color: palette.bullet,
+    w: 1,
+    h: 3,
+    pierce: 0,
+    hitIds: new Set<number>(),
+    bounces: 0,
+    homing: 0,
+    damage: 1,
+    life: 3,
+    age: 0,
+    shape: 'rect',
+    trail: false,
+    ...opts
+  }
+  // 子弹尺寸随画布高度等比缩放，与机甲/楼体保持一致比例
+  bullet.w *= speedScale
+  bullet.h *= speedScale
+  return bullet
+}
 
 // 6 台高达各自的武器配置：根据当前高达选择弹道形态
 // 每个 profile 接收 (plane, player, extraLines) 返回本帧生成的子弹数组
@@ -908,7 +934,7 @@ const WEAPON_PROFILES: WeaponProfile[] = [
     const total = 3 + extraLines
     const angles = linspace(-8, 8, total)
     return angles.map((angle) => {
-      const { vx, vy } = velFromAngle(angle, BULLET_SPEED)
+      const { vx, vy } = velFromAngle(angle, BULLET_SPEED * speedScale)
       return makeBullet(planePos.x, y, vx, vy, { shape: 'rect', w: 1, h: 3 })
     })
   },
@@ -920,7 +946,7 @@ const WEAPON_PROFILES: WeaponProfile[] = [
     const total = 2 + extraLines
     const offsets = linspace(-halfSpan, halfSpan, total)
     return offsets.map((offset) =>
-      makeBullet(planePos.x + offset, y, 0, -BULLET_SPEED * 1.1, {
+      makeBullet(planePos.x + offset, y, 0, -BULLET_SPEED * 1.1 * speedScale, {
         shape: 'beam',
         w: 2,
         h: 5,
@@ -936,7 +962,7 @@ const WEAPON_PROFILES: WeaponProfile[] = [
     const total = 4 + extraLines
     const angles = linspace(-20, 20, total)
     return angles.map((angle) => {
-      const { vx, vy } = velFromAngle(angle, BULLET_SPEED * 0.9)
+      const { vx, vy } = velFromAngle(angle, BULLET_SPEED * 0.9 * speedScale)
       return makeBullet(planePos.x, y, vx, vy, {
         shape: 'round',
         w: 2,
@@ -953,10 +979,10 @@ const WEAPON_PROFILES: WeaponProfile[] = [
     const total = 2 + extraLines
     const offsets = linspace(-halfSpan, halfSpan, total)
     return offsets.map((offset) =>
-      makeBullet(planePos.x + offset, y, 0, -BULLET_SPEED * 0.65, {
+      makeBullet(planePos.x + offset, y, 0, -BULLET_SPEED * 0.65 * speedScale, {
         shape: 'rocket',
-        w: 2.5,
-        h: 4.5,
+        w: 1.75,
+        h: 3.15,
         homing: 3,
         trail: true,
         life: 2.8
@@ -971,7 +997,7 @@ const WEAPON_PROFILES: WeaponProfile[] = [
     const total = 2 + extraLines
     const offsets = linspace(-halfSpan, halfSpan, total)
     return offsets.map((offset) =>
-      makeBullet(planePos.x + offset, y, 0, -BULLET_SPEED * 0.6, {
+      makeBullet(planePos.x + offset, y, 0, -BULLET_SPEED * 0.6 * speedScale, {
         shape: 'rect',
         w: 2.5,
         h: 4,
@@ -986,7 +1012,7 @@ const WEAPON_PROFILES: WeaponProfile[] = [
     const total = 3 + extraLines
     const angles = linspace(-30, 30, total)
     return angles.map((angle) => {
-      const { vx, vy } = velFromAngle(angle, BULLET_SPEED * 0.96)
+      const { vx, vy } = velFromAngle(angle, BULLET_SPEED * 0.96 * speedScale)
       return makeBullet(planePos.x, y, vx, vy, { shape: 'rect', w: 1, h: 3 })
     })
   }
@@ -1041,7 +1067,7 @@ const spawnEnemy = () => {
     baseX,
     amp: 2 + Math.random() * 3,
     phase: Math.random() * Math.PI * 2,
-    speed: 9 + Math.random() * 7,
+    speed: (9 + Math.random() * 7) * speedScale,
     name,
     sprite,
     halfW,
@@ -1055,15 +1081,15 @@ const spawnEnemy = () => {
 // 装饰从顶部外沿重生，速度略慢于敌人形成视差
 const spawnProp = (seed = false) => {
   const sprite = PROP_SPRITES[Math.floor(Math.random() * PROP_SPRITES.length)]
-  const halfW = sprite.width / 2
-  const halfH = sprite.height / 2
+  const halfW = (sprite.width * speedScale) / 2
+  const halfH = (sprite.height * speedScale) / 2
   const minX = Math.min(halfW, width / 2)
   const maxX = Math.max(width - halfW, width / 2)
   props.push({
     sprite,
     x: minX + Math.random() * (maxX - minX),
     y: seed ? Math.random() * height : -halfH - Math.random() * 10,
-    speed: PROP_SPEED,
+    speed: PROP_SPEED * speedScale,
     hp: BUILDING_HP
   })
 }
@@ -1075,14 +1101,14 @@ const spawnDrop = (x: number, y: number) => {
     y,
     baseX: x,
     phase: Math.random() * Math.PI * 2,
-    speed: 7 + Math.random() * 3
+    speed: (7 + Math.random() * 3) * speedScale
   })
 }
 
 const explode = (x: number, y: number) => {
   for (let i = 0; i < 16; i += 1) {
     const angle = Math.random() * Math.PI * 2
-    const speed = 6 + Math.random() * 22
+    const speed = (6 + Math.random() * 22) * speedScale
     particles.push({
       x,
       y,
@@ -1161,9 +1187,9 @@ const handleCollisions = () => {
     // 未被敌机消耗时再判定背景建筑：子弹消失，楼体掉血并缺一角，打满次数后炸掉并补一栋新的
     const propIndex = props.findIndex(
       (prop) =>
-        Math.abs(bullet.x - prop.x) <= prop.sprite.width / 2 &&
-        bullet.y <= prop.y + prop.sprite.height / 2 &&
-        bullet.y + bullet.h >= prop.y - prop.sprite.height / 2
+        Math.abs(bullet.x - prop.x) <= (prop.sprite.width * speedScale) / 2 &&
+        bullet.y <= prop.y + (prop.sprite.height * speedScale) / 2 &&
+        bullet.y + bullet.h >= prop.y - (prop.sprite.height * speedScale) / 2
     )
     if (propIndex === -1) continue
     bullets.splice(i, 1)
@@ -1235,8 +1261,8 @@ const update = (dt: number, now: number) => {
     const pHalfW = playerWidth() / 2
     const pHalfH = playerHeight() / 2
     for (const prop of props) {
-      const propHalfW = prop.sprite.width / 2 - PROP_BLOCK_TOLERANCE
-      const propHalfH = prop.sprite.height / 2 - PROP_BLOCK_TOLERANCE
+      const propHalfW = (prop.sprite.width * speedScale) / 2 - PROP_BLOCK_TOLERANCE
+      const propHalfH = (prop.sprite.height * speedScale) / 2 - PROP_BLOCK_TOLERANCE
       if (propHalfW <= 0 || propHalfH <= 0) continue
       const dx = plane.x - prop.x
       const dy = plane.y - prop.y
@@ -1321,7 +1347,7 @@ const update = (dt: number, now: number) => {
   for (let i = props.length - 1; i >= 0; i -= 1) {
     const prop = props[i]
     prop.y += prop.speed * dt
-    if (prop.y - prop.sprite.height / 2 > height) {
+    if (prop.y - (prop.sprite.height * speedScale) / 2 > height) {
       props.splice(i, 1)
       spawnProp()
     }
@@ -1633,30 +1659,33 @@ const drawTransformText = () => {
 const drawBuilding = (prop: Prop) => {
   if (!ctx) return
   const { sprite } = prop
-  const dx = snapCss(prop.x - sprite.width / 2)
-  const dy = snapCss(prop.y - sprite.height / 2)
+  // 楼体尺寸随画布高度等比缩放，保持与机甲一致的屏幕占比
+  const sw = sprite.width * speedScale
+  const sh = sprite.height * speedScale
+  const dx = snapCss(prop.x - sw / 2)
+  const dy = snapCss(prop.y - sh / 2)
   const image = propImage(sprite)
   const damage = BUILDING_HP - prop.hp
 
   if (damage <= 0) {
-    ctx.drawImage(image, dx, dy)
+    ctx.drawImage(image, dx, dy, sw, sh)
     return
   }
 
-  const bodyH = Math.max(1, sprite.height - BUILDING_BODY_TOP)
+  const bodyH = Math.max(1, sh - BUILDING_BODY_TOP * speedScale)
   // 削角边长：每削完一圈四角就再放大一档，越打缺口越大
-  const base = Math.max(1, Math.round(Math.min(sprite.width, bodyH) / 6))
+  const base = Math.max(1, Math.round(Math.min(sw, bodyH) / 6))
   ctx.save()
   clipDamageCorners(
     dx,
     dy,
-    sprite.width,
-    sprite.height,
+    sw,
+    sh,
     damage,
-    BUILDING_BODY_TOP,
+    BUILDING_BODY_TOP * speedScale,
     base
   )
-  ctx.drawImage(image, dx, dy)
+  ctx.drawImage(image, dx, dy, sw, sh)
   ctx.restore()
 }
 
@@ -1703,7 +1732,13 @@ const drawEnemyLabels = () => {
 
 const render = () => {
   if (!ctx) return
-  ctx.clearRect(0, 0, width, height)
+  // 全屏时用站点主题背景色填充画布，退出全屏后恢复透明
+  if (isFullscreen.value) {
+    ctx.fillStyle = palette.bg
+    ctx.fillRect(0, 0, width, height)
+  } else {
+    ctx.clearRect(0, 0, width, height)
+  }
 
   // 背景装饰（写字楼）
   drawProps()
