@@ -2,9 +2,9 @@
 layout: home
 
 hero:
-  name: Front2Full
-  text: 从前端出发，沿技术栈走到全栈
-  tagline: 专题文章 + 配套工程实践，既能读，也能照着做。
+  # name: Front2Full
+  text: The Development Manual
+  tagline:  Starts from the front end and moves along the technology stack towards the full stack
   actions:
     - theme: brand
       text: 开始阅读

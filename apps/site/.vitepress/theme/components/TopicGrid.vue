@@ -2,6 +2,7 @@
 import { computed } from 'vue'
 import { withBase } from 'vitepress'
 import { countArticles, getColumn, topicPath } from '../../data/catalog'
+import TopicCard from './TopicCard.vue'
 
 const props = defineProps<{ column: string }>()
 
@@ -27,29 +28,26 @@ function metaOf(topic: (typeof published.value)[number]) {
   <section v-if="column" class="topic-section">
     <h2 class="topic-section__title">已发布专题（{{ published.length }}）</h2>
     <div v-if="published.length" class="topic-grid">
-      <a
+      <TopicCard
         v-for="topic in published"
         :key="topic.slug"
-        class="topic-card"
+        :title="topic.title"
+        :description="topic.description"
+        :meta="metaOf(topic)"
         :href="linkOf(topic.slug)"
-      >
-        <h3 class="topic-card__title">{{ topic.title }}</h3>
-        <p class="topic-card__desc">{{ topic.description }}</p>
-        <p v-if="metaOf(topic)" class="topic-card__meta">{{ metaOf(topic) }}</p>
-      </a>
+      />
     </div>
     <p v-else class="topic-section__empty">暂无已发布专题，正在整理中。</p>
 
     <template v-if="planned.length">
       <h2 class="topic-section__title">筹备中专题（{{ planned.length }}）</h2>
       <div class="topic-grid">
-        <div v-for="topic in planned" :key="topic.slug" class="topic-card topic-card--planned">
-          <div class="topic-card__head">
-            <h3 class="topic-card__title">{{ topic.title }}</h3>
-            <span class="badge--planned">筹备中</span>
-          </div>
-          <p class="topic-card__desc">{{ topic.description }}</p>
-        </div>
+        <TopicCard
+          v-for="topic in planned"
+          :key="topic.slug"
+          :title="topic.title"
+          :description="topic.description"
+        />
       </div>
     </template>
   </section>

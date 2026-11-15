@@ -15,7 +15,7 @@ const componentsEntry = fileURLToPath(
 export default defineConfig({
   lang: 'zh-CN',
   title: 'Front2Full',
-  description: '从前端出发，沿技术栈走到全栈',
+  description: 'The Full-stack Development Manual',
   base,
   vite: {
     resolve: {

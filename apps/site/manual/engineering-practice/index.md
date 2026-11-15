@@ -2,6 +2,7 @@
 title: 工程实践
 description: 可交付的工程：组件库、构建发布、测试与部署。
 outline: false
+aside: false
 ---
 
 # 工程实践

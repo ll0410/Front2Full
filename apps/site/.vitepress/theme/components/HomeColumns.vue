@@ -2,6 +2,7 @@
 import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
 import { withBase } from 'vitepress'
 import { columns, countArticles, topicPath } from '../../data/catalog'
+import TopicCard from './TopicCard.vue'
 
 const columnEls = ref<HTMLElement[]>([])
 
@@ -61,18 +62,25 @@ onBeforeUnmount(() => {
   if (frame) cancelAnimationFrame(frame)
 })
 
-const sections = columns.map((column) => ({
-  slug: column.slug,
-  title: column.title,
-  topics: column.topics.map((topic) => ({
-    slug: topic.slug,
-    title: topic.title,
-    description: topic.description,
-    link:
-      topic.status === 'published' ? withBase(topicPath(column.slug, topic.slug)) : undefined,
-    meta: topic.parts?.length ? `${topic.parts.length} 个部分 · ${countArticles(topic)} 篇文章` : ''
+// 首页只展示已发布专题，筹备中的专题仅在对应专栏页可见；
+// 没有任何已发布专题的专栏整体不展示
+const sections = columns
+  .map((column) => ({
+    slug: column.slug,
+    title: column.title,
+    topics: column.topics
+      .filter((topic) => topic.status === 'published')
+      .map((topic) => ({
+        slug: topic.slug,
+        title: topic.title,
+        description: topic.description,
+        link: withBase(topicPath(column.slug, topic.slug)),
+        meta: topic.parts?.length
+          ? `${topic.parts.length} 个部分 · ${countArticles(topic)} 篇文章`
+          : ''
+      }))
   }))
-}))
+  .filter((section) => section.topics.length > 0)
 </script>
 
 <template>
@@ -95,19 +103,12 @@ const sections = columns.map((column) => ({
       </div>
       <ul class="home-column__list">
         <li v-for="topic in section.topics" :key="topic.slug">
-          <component
-            :is="topic.link ? 'a' : 'div'"
-            class="home-topic"
-            :class="{ 'home-topic--planned': !topic.link }"
+          <TopicCard
+            :title="topic.title"
+            :description="topic.description"
+            :meta="topic.meta"
             :href="topic.link"
-          >
-            <span class="home-topic__title">
-              {{ topic.title }}
-              <span v-if="!topic.link" class="home-topic__badge">筹备中</span>
-            </span>
-            <span class="home-topic__desc">{{ topic.description }}</span>
-            <span v-if="topic.meta" class="home-topic__meta">{{ topic.meta }}</span>
-          </component>
+          />
         </li>
       </ul>
     </section>

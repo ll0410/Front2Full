@@ -78,13 +78,6 @@
   letter-spacing: -0.01em;
 }
 
-/* 卡片是链接，需要抵消 vp-doc 对正文链接的下划线与品牌色 */
-.vp-doc a.topic-card {
-  color: inherit;
-  font-weight: inherit;
-  text-decoration: none;
-}
-
 /* ---------- 首页专栏区（卡片网格参考 pinia.vuejs.org 首页 features） ---------- */
 
 .home-columns {
@@ -151,7 +144,9 @@
   content: '';
 }
 
-.home-topic {
+/* ---------- 专题卡片（首页与专栏页共用） ---------- */
+
+.topic-card {
   /* 卡片内边距随断点收窄，__meta 的隐藏位移与它保持同步 */
   --f2f-card-pad: 24px;
   display: flex;
@@ -168,7 +163,8 @@
     border-color var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
-.vp-doc a.home-topic {
+/* 卡片是链接，需要抵消 vp-doc 对正文链接的下划线、品牌色与 transition */
+.vp-doc a.topic-card {
   color: inherit;
   font-weight: inherit;
   text-decoration: none;
@@ -178,27 +174,27 @@
     border-color var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
-.vp-doc a.home-topic:hover {
+.vp-doc a.topic-card:hover {
   border-color: var(--f2f-card-bg-hover);
   background-color: var(--f2f-card-bg-hover);
 }
 
-.vp-doc a.home-topic:hover .home-topic__title {
+.vp-doc a.topic-card:hover .topic-card__title {
   color: var(--f2f-card-hover-title);
 }
 
-.vp-doc a.home-topic:hover .home-topic__desc {
+.vp-doc a.topic-card:hover .topic-card__desc {
   color: var(--f2f-card-hover-desc);
   transform: translateY(0);
 }
 
-.vp-doc a.home-topic:hover .home-topic__meta {
+.vp-doc a.topic-card:hover .topic-card__meta {
   color: var(--f2f-card-hover-meta);
   opacity: 1;
   transform: translateY(0);
 }
 
-.home-topic__title {
+.topic-card__title {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -210,7 +206,7 @@
   transition: color var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
-.home-topic__desc {
+.topic-card__desc {
   display: -webkit-box;
   flex-grow: 1;
   padding-top: 8px;
@@ -228,7 +224,7 @@
     transform var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
-.home-topic__meta {
+.topic-card__meta {
   padding-top: 8px;
   font-size: 12px;
   line-height: 20px;
@@ -242,21 +238,21 @@
     transform var(--f2f-hover-duration) var(--f2f-hover-ease);
 }
 
-.home-topic--planned {
+.topic-card--planned {
   border-style: dashed;
   background: transparent;
   cursor: default;
 }
 
-.home-topic--planned .home-topic__title {
+.topic-card--planned .topic-card__title {
   color: var(--vp-c-text-2);
 }
 
-.home-topic--planned .home-topic__desc {
+.topic-card--planned .topic-card__desc {
   color: var(--vp-c-text-3);
 }
 
-.home-topic__badge {
+.topic-card__badge {
   flex-shrink: 0;
   margin-left: 0;
   padding: 1px 6px;
@@ -268,7 +264,7 @@
   background: var(--vp-c-default-soft);
 }
 
-/* ---------- 专栏页专题卡片 ---------- */
+/* ---------- 专栏页专题卡片（复用首页卡片样式） ---------- */
 
 .topic-section__title {
   margin: 32px 0 16px;
@@ -292,81 +288,6 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-}
-
-.topic-card {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 20px;
-  border: 1px solid var(--f2f-card-border);
-  border-radius: var(--f2f-card-radius);
-  background: var(--f2f-card-bg);
-  transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
-}
-
-.topic-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--vp-c-brand-1);
-  box-shadow: var(--vp-shadow-2);
-}
-
-.topic-card__head {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 12px;
-}
-
-.topic-card__title {
-  margin: 0;
-  font-size: 17px;
-  font-weight: 600;
-  line-height: 1.4;
-  color: var(--vp-c-text-1);
-}
-
-.topic-card__desc {
-  margin: 0;
-  font-size: 14px;
-  line-height: 1.65;
-  color: var(--vp-c-text-2);
-}
-
-.topic-card__meta {
-  margin: 0;
-  font-size: 12px;
-  color: var(--vp-c-text-3);
-}
-
-.topic-card--planned {
-  background: transparent;
-  border-style: dashed;
-  cursor: default;
-}
-
-.topic-card--planned:hover {
-  transform: none;
-  border-color: var(--f2f-card-border);
-  box-shadow: none;
-}
-
-.topic-card--planned .topic-card__title {
-  color: var(--vp-c-text-2);
-}
-
-.topic-card--planned .topic-card__desc {
-  color: var(--vp-c-text-3);
-}
-
-.badge--planned {
-  flex-shrink: 0;
-  padding: 2px 8px;
-  border-radius: 999px;
-  font-size: 12px;
-  line-height: 18px;
-  color: var(--vp-c-text-3);
-  background: var(--vp-c-default-soft);
 }
 
 /* ---------- 文档页面包屑 ---------- */
@@ -401,6 +322,19 @@
 
 /* ---------- 响应式 ---------- */
 
+/* 专栏首页既没有侧边栏也没有目录，放开 VitePress 默认的 752px 正文上限，
+   版心与首页保持一致。选择器加上 #VPContent，用于压过 VitePress 组件样式里
+   带 [data-v-*] 的同等规则 */
+@media (min-width: 960px) {
+  #VPContent .VPDoc:not(.has-sidebar) .container {
+    max-width: 1152px;
+  }
+
+  #VPContent .VPDoc:not(.has-sidebar) .content {
+    max-width: 100%;
+  }
+}
+
 @media (max-width: 900px) {
   /* 选择器与基础规则保持同等特异性，否则 3 列声明会覆盖这里的列数 */
   .vp-doc ul.home-column__list {
@@ -411,11 +345,11 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .home-topic {
+  .topic-card {
     --f2f-card-pad: 20px;
   }
 
-  .home-topic__desc {
+  .topic-card__desc {
     -webkit-line-clamp: 2;
     line-clamp: 2;
   }
@@ -430,33 +364,33 @@
     grid-template-columns: minmax(0, 1fr);
   }
 
-  .home-topic {
+  .topic-card {
     --f2f-card-pad: 16px;
   }
 
-  .home-topic__title {
+  .topic-card__title {
     font-size: 15px;
     line-height: 22px;
   }
 
-  .home-topic__desc {
+  .topic-card__desc {
     padding-top: 6px;
     font-size: 13px;
     line-height: 22px;
   }
 
-  .home-topic__meta {
+  .topic-card__meta {
     padding-top: 6px;
   }
 }
 
 /* 触屏设备没有 hover：描述与元信息常驻显示，避免信息永远不可见 */
 @media (hover: none) {
-  .home-topic__desc {
+  .topic-card__desc {
     transform: none;
   }
 
-  .home-topic__meta {
+  .topic-card__meta {
     opacity: 1;
     transform: none;
   }

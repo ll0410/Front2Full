@@ -2,6 +2,7 @@
 title: Vue 组件库开发指南
 description: 从架构、开发、测试、文档到发布，完整走一遍 Vue 3 组件库的搭建过程。
 outline: false
+aside: false
 ---
 
 # Vue 组件库开发指南
