@@ -439,7 +439,12 @@ const ALL_GUNDAMS = GUNDAMS.map(prepare)
 const ALL_ZAKUS = ZAKUS.map(prepare)
 
 const canvasRef = ref<HTMLCanvasElement | null>(null)
+const containerRef = ref<HTMLDivElement | null>(null)
 const hintVisible = ref(true)
+const isFullscreen = ref(false)
+// 连按两次 F 触发全屏的时间窗口（毫秒）
+const FULLSCREEN_DOUBLE_TAP_MS = 400
+let lastFPressTime = 0
 
 const plane = { x: 0, y: 0 }
 const pointer = { x: 0, y: 0 }
@@ -812,6 +817,40 @@ const updatePointer = (event: PointerEvent) => {
 
 const onPointerLeave = () => {
   following = false
+}
+
+// 全屏切换：对 .hero-game 容器调用浏览器全屏 API，ResizeObserver 会自动重算画布尺寸
+const toggleFullscreen = async () => {
+  const el = containerRef.value
+  if (!el) return
+  try {
+    if (!document.fullscreenElement) {
+      await el.requestFullscreen()
+    } else {
+      await document.exitFullscreen()
+    }
+  } catch {
+    // 浏览器拒绝全屏请求（权限/策略）时静默失败，不影响游戏
+  }
+}
+
+// 键盘监听：仅在鼠标正在画布内跟随时，连按两次 F 切换全屏
+const onKeydown = (e: KeyboardEvent) => {
+  if (!following) return
+  if (e.key !== 'f' && e.key !== 'F') return
+  if (e.metaKey || e.ctrlKey || e.altKey) return
+  const now = performance.now()
+  if (now - lastFPressTime < FULLSCREEN_DOUBLE_TAP_MS) {
+    toggleFullscreen()
+    lastFPressTime = 0
+  } else {
+    lastFPressTime = now
+  }
+}
+
+// 同步全屏状态
+const onFullscreenChange = () => {
+  isFullscreen.value = !!document.fullscreenElement
 }
 
 // 把角度（度，相对正上方）换算为速度分量
@@ -1852,6 +1891,8 @@ onMounted(() => {
   })
 
   document.addEventListener('visibilitychange', onVisibilityChange)
+  window.addEventListener('keydown', onKeydown)
+  document.addEventListener('fullscreenchange', onFullscreenChange)
   syncRunning()
 
   // 初始提示文案 2 秒后自动隐藏
@@ -1867,6 +1908,8 @@ onBeforeUnmount(() => {
   intersectionObserver?.disconnect()
   themeObserver?.disconnect()
   document.removeEventListener('visibilitychange', onVisibilityChange)
+  window.removeEventListener('keydown', onKeydown)
+  document.removeEventListener('fullscreenchange', onFullscreenChange)
   walkFrames.clear()
   propImages.clear()
   props.length = 0
@@ -1880,7 +1923,7 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <div class="hero-game" aria-hidden="true">
+  <div class="hero-game" ref="containerRef" aria-hidden="true">
     <canvas
       ref="canvasRef"
       class="hero-game__canvas"
@@ -1889,7 +1932,7 @@ onBeforeUnmount(() => {
       @pointerleave="onPointerLeave"
     />
     <span class="hero-game__hint" :class="{ 'is-hidden': !hintVisible }">
-      Try This Game
+      Try This Game · 连按 F 全屏
     </span>
   </div>
 </template>
