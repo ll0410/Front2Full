@@ -101,7 +101,6 @@
   gap: 16px;
   margin-bottom: 16px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--vp-c-divider);
   /* 默认隐藏专栏标题栏，hover 整个专栏时淡入 */
   opacity: 0;
   visibility: hidden;
@@ -188,7 +187,7 @@
 
 .vp-doc a.home-topic:hover .home-topic__desc {
   color: var(--f2f-card-hover-desc);
-  transform: translateY(-6px);
+  transform: translateY(0);
 }
 
 .vp-doc a.home-topic:hover .home-topic__meta {
@@ -210,12 +209,18 @@
 }
 
 .home-topic__desc {
+  display: -webkit-box;
   flex-grow: 1;
   padding-top: 8px;
+  overflow: hidden;
   font-size: 14px;
   font-weight: 500;
   line-height: 24px;
   color: var(--vp-c-text-2);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  transform: translateY(24px);
   transition:
     color var(--f2f-hover-duration) var(--f2f-hover-ease),
     transform var(--f2f-hover-duration) var(--f2f-hover-ease);
