@@ -1967,7 +1967,7 @@ onBeforeUnmount(() => {
       @pointerleave="onPointerLeave"
     />
     <span class="hero-game__hint" :class="{ 'is-hidden': !hintVisible }">
-      Try This Game · 连按 F 全屏
+      Try This Game · Double-tap F for Fullscreen
     </span>
   </div>
 </template>
