@@ -2,6 +2,7 @@ import DefaultTheme from 'vitepress/theme'
 import { h } from 'vue'
 import { Button, Input, Select, Dialog } from '@vcl/components'
 import DocBreadcrumb from './components/DocBreadcrumb.vue'
+import HeroGame from './components/HeroGame.vue'
 import HomeColumns from './components/HomeColumns.vue'
 import TopicGrid from './components/TopicGrid.vue'
 import './custom.css'
@@ -10,7 +11,8 @@ export default {
   extends: DefaultTheme,
   Layout: () =>
     h(DefaultTheme.Layout, null, {
-      'doc-before': () => h(DocBreadcrumb)
+      'doc-before': () => h(DocBreadcrumb),
+      'home-hero-image': () => h(HeroGame)
     }),
   enhanceApp({ app }: { app: import('vue').App }) {
     app.component('HomeColumns', HomeColumns)

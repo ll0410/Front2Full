@@ -78,6 +78,68 @@
   letter-spacing: -0.01em;
 }
 
+/* ---------- 首页 hero 像素飞机小游戏 ---------- */
+
+/* 游戏占满 hero 的 image 插槽：移动端位于标题上方，桌面端位于右侧留白区 */
+.VPHomeHero .container > .image {
+  margin: 0 0 24px;
+}
+
+/* VitePress 默认让 image 向右上偏移，游戏面板需要完整居中 */
+.VPHomeHero .image > .image-container {
+  transform: none;
+}
+
+@media (min-width: 960px) {
+  .VPHomeHero .container > .image {
+    margin: 0;
+  }
+}
+
+.hero-game {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 240px;
+  background: transparent;
+}
+
+.hero-game__canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  cursor: crosshair;
+  /* 放大像素块时保持硬边 */
+  image-rendering: pixelated;
+  /* 允许纵向滚动页面，横向拖动交给飞机 */
+  touch-action: pan-y;
+}
+
+.hero-game__hint {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-family: var(--vp-font-family-mono);
+  font-size: 10px;
+  line-height: 16px;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  color: var(--vp-c-text-3);
+  background: color-mix(in srgb, var(--vp-c-bg) 72%, transparent);
+  transform: translateX(-50%);
+  transition:
+    opacity 0.4s ease,
+    transform 0.4s ease;
+  pointer-events: none;
+}
+
+.hero-game__hint.is-hidden {
+  opacity: 0;
+  transform: translate(-50%, 6px);
+}
+
 /* ---------- 首页专栏区（卡片网格参考 pinia.vuejs.org 首页 features） ---------- */
 
 .home-columns {
