@@ -7,7 +7,6 @@
 - **专题手册**：按专栏组织 Agent、LLM、数学、计算机编程、工具、应用框架与工程实践等专题。
 - **工程实践**：提供可运行、可构建、可测试的配套代码，目前包含 Vue 3 组件库实践。
 - **统一文档站**：基于 VitePress，支持深浅色主题、响应式布局、Clean URL 与数学公式渲染。
-- **互动首页**：包含专题卡片、磁力悠悠球效果，以及像素机甲射击小游戏。
 
 ## 技术栈
 
@@ -133,19 +132,3 @@ apps/site/.vitepress/dist/
 ```
 
 该目录可直接发布到任意静态托管服务。当前 `apps/site/.vitepress/config.mts` 中的 `base` 为 `/Front2Full/`，用于 GitHub Pages 项目页；如果部署到自定义域名或站点根路径，应将其改为 `/`。
-
-## 项目文档
-
-- [专题导入规范](docs/专题导入规范.md)：专题迁移、目录结构、Frontmatter、链接与验收规则。
-- [像素机甲射击小游戏设定](docs/像素机甲射击小游戏设定.md)：首页小游戏的玩法、武器、数值、特效与全屏规则。
-
-## 提交规范
-
-代码提交遵循 [Conventional Commits](https://www.conventionalcommits.org/zh-hans/)：
-
-```text
-feat(site): 新增专题导航
-fix(game): 修复全屏切换时的尺寸计算
-docs: 更新专题导入规范
-chore: 调整构建脚本
-```
