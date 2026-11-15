@@ -5,7 +5,7 @@ import { columns } from './data/catalog'
 import { buildSidebar } from './utils/sidebar'
 
 // 部署到 GitHub Pages 项目页等子路径时，把 base 改成 '/<repo>/'。
-const base = '/'
+const base = '/Front2Full/'
 
 // 组件库实践项目的源码入口，供 Markdown 中的 <Button /> 等示例直接渲染。
 const componentsEntry = fileURLToPath(
