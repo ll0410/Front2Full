@@ -38,7 +38,10 @@ export default defineConfig({
     }
   },
   head: [
-    ['meta', { name: 'theme-color', content: '#18794e' }],
+    // 首屏（JS 未执行前）按系统偏好给一版正确颜色，避免独立窗口标题栏闪一下
+    ['meta', { name: 'theme-color', media: '(prefers-color-scheme: light)', content: '#ffffff' }],
+    ['meta', { name: 'theme-color', media: '(prefers-color-scheme: dark)', content: '#111827' }],
+    ['link', { rel: 'manifest', href: `${base}manifest.webmanifest` }],
     ['link', { rel: 'icon', type: 'image/svg+xml', href: `${base}logo.svg` }]
   ],
   themeConfig: {

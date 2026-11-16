@@ -5,6 +5,7 @@ import DocBreadcrumb from './components/DocBreadcrumb.vue'
 import HeroGame from './components/HeroGame.vue'
 import HomeColumns from './components/HomeColumns.vue'
 import TopicGrid from './components/TopicGrid.vue'
+import { setupThemeColor } from './theme-color'
 import './custom.css'
 
 export default {
@@ -15,6 +16,7 @@ export default {
       'home-hero-image': () => h(HeroGame)
     }),
   enhanceApp({ app }: { app: import('vue').App }) {
+    setupThemeColor()
     app.component('HomeColumns', HomeColumns)
     app.component('TopicGrid', TopicGrid)
     app.component('Button', Button)
